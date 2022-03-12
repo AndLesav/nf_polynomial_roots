@@ -1,0 +1,35 @@
+set border lw 2
+set grid lw 1.5 lt 1 lc "grey"
+set key center right
+set key font ",13"
+set key box lw 1 width 1 height 0.2
+set xtics font ",12"
+set ytics font ",12"
+
+set style line 1 dt 1 pt 5 ps 1 lw 2.5 lc "black" 
+set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"  
+set style line 3 dt 5 pt 6 lw 2.5 lc "dark-magenta" 
+set style line 4 dt 3 pt 7 lw 2.5 ps 1 lc "olive"   
+set style line 5 dt 4 pt 8 lw 2.5 ps 1 lc "red"
+
+
+
+file(type,size_pol,size_roots) = sprintf("../data/prec_eval_%s_%d_%d", type,size_pol,size_roots)
+
+figure(type,size_pol) = sprintf("../figures/prec_eval_%s_%d.png", type,size_pol)
+
+ratio(prec,dim,size) = prec/(1 + (log(dim)/2*log(log(dim)))/(log(2)*size+log(dim)/2))
+
+
+TYPE="real"
+SIZE_POL=1
+
+
+plot file(TYPE,SIZE_POL,1) u ($1):(ratio($2,$1,1)) ls 1 w lp title "s=1",\
+     file(TYPE,SIZE_POL,25) u ($1):(ratio($2,$1,25)) ls 2 w lp title "s=25",\
+     # file_RR(SIZE) u ($1):(ratio($5,$1,50)) ls 3 w lp title "s=50",\
+     # file_RR(SIZE) u ($1):(ratio($6,$1,75)) ls 4 w lp title "s=75",\
+     # file_RR(SIZE) u ($1):(ratio($7,$1,100)) ls 5 w lp title "s=100"
+set terminal pngcairo
+set output figure(TYPE,SIZE_POL)
+replot 

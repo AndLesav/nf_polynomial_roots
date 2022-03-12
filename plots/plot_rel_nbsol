@@ -1,0 +1,43 @@
+set border lw 2
+set grid lw 1.5 lt 1 lc "grey"
+set key top left
+set key font ",13"
+set xtics font ",15"
+set ytics font ",15" 
+set key box lw 1 width 0 height 1
+
+
+set style line 1 dt 2 pt 5 ps 1 lw 2.5 lc "blue" #lll heur abs
+set style line 2 dt 3 pt 9 ps 1 lw 2.5 lc "dark-magenta"   #lll heur rel
+
+file_abs(dg, de, size) = sprintf("../data/REL_NBSOL_LLL_abs_%d_%d_%d", dg, de, size);
+file_rel(dg, de, size) = sprintf("../data/REL_NBSOL_LLL_rel_%d_%d_%d", dg, de, size);
+
+figure(dg, de, size) =  sprintf("../figures/rel_lll_nbsol_%d_%d_%d.png", dg, de, size)
+
+
+set logscale y
+
+SIZE=10
+
+
+
+DG=30
+DE=3
+
+plot file_abs(DG, DE, SIZE) u 1:2 w lp ls 1 title "Absolute method",\
+     file_rel(DG, DE, SIZE) u 1:2 w lp ls 2 title "Relative method"
+set terminal pngcairo
+set output figure(DG, DE, SIZE)
+replot
+
+
+
+DG=45;
+DE=2;
+
+plot file_abs(DG, DE, SIZE) u 1:2 w lp ls 1 title "Absolute method",\
+     file_rel(DG, DE, SIZE) u 1:2 w lp ls 2 title "Relative method"
+set terminal pngcairo
+set output figure(DG, DE, SIZE)
+replot

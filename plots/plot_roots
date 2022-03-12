@@ -1,0 +1,49 @@
+set border lw 2
+set grid lw 1.5 lt 1 lc "grey"
+# set key below
+set key top left
+set key font ",15"
+set xtics font ",16"
+set ytics font ",16"
+# set ylabel "Time (s)" font ",15"
+# set xlabel "Size of roots" font ",15"
+
+set style line 1 dt 1 lw 3 lc "black" 
+set style line 2 dt 2 lw 3 lc "red"
+set style line 3 dt 3 lw 3 lc "blue"
+set style line 4 dt 4 lw 3 lc "olive"
+set style line 5 dt 5 lw 3 lc "grey"
+# set output "output.ps"
+# set terminal dumb
+
+# plot "OUTPUTS/times_magma_1" u (($1+2)*10):($2) linewidth 2 with linespoints, "OUTPUTS/output_times_gp_1" u 1:2 linewidth 2 with linespoints
+
+# n=50 #number of intervals
+# max=3.5 #max value
+# min=0 #min value
+# width=(max-min)/n #interval width
+# #function used to map a value to the intervals
+# hist(x, width)=width*floor(x/width)+width/2.0
+# set boxwidth width*0.9
+# set style fill solid 0.5 # fill style
+
+dim = 25
+
+# plot "OUTPUTS/ROOTS_GP_real20" u 1:2 w lp ls 1 title "nfroots" ,\
+#      "OUTPUTS/ROOTS_LLL_CERT_real20" u 1:2 w lp ls 2 title "PolynomialRoots" ,\
+#      "OUTPUTS/ROOTS_LLL_HEUR_real20" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+plot "OUTPUTS/ROOTS_GP_complex_50_NEW" u 1:2 w lp ls 1 title "nfroots",\
+     "OUTPUTS/ROOTS_LLL_cert_complex_50_NEW" u 1:2 w lp ls 2 title "PolynomialRoots",\
+     "OUTPUTS/ROOTS_LLL_heur_complex_50_NEW" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+# plot "OUTPUTS/ROOTS_GP_complex20" u 1:2 w lp ls 1 title "nfroots" ,\
+#      "OUTPUTS/ROOTS_LLL_CERT_complex20" u 1:2 w lp ls 2 title "PolynomialRoots" ,\
+#      "OUTPUTS/ROOTS_LLL_HEUR_complex20" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+# plot "OUTPUTS/ROOTS_GP_complex50" u 1:2 w lp ls 1 title "nfroots",\
+#      "OUTPUTS/ROOTS_LLL_CERT_complex50" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "OUTPUTS/ROOTS_LLL_HEUR_complex50" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+
+# plot "OUTPUTS/ROOTS_LLL_heur_real_50_NEW" u 1:3  w lp ls 3 title "PolynomialRoots\\\_heur"

@@ -1,0 +1,37 @@
+set border lw 2
+set grid lw 1.25 lt 1 lc "grey"
+set key left top
+set key font ",12"
+set key box lw 1 width -3 height 1
+set xtics font ",12"
+set ytics font ",12" 
+# set ylabel "Time" font ",17"
+# set xlabel "Dimension" font ",17"
+
+
+set style line 1 dt 1 pt 5 ps 1 lw 2.5 lc "black" #gp
+set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"   #lll abs
+set style line 3 dt  5 pt 6 lw 2.5 lc "dark-magenta"  #lll rel
+
+
+file_gp(deg, size) = sprintf("../data/CYCLO_GP_%d_%s", deg, size)
+file_abs(deg, size) = sprintf("../data/CYCLO_LLL_abs_%d_%s", deg, size)
+file_rel(deg, size) = sprintf("../data/CYCLO_LLL_rel_%d_%s", deg, size)
+
+figure(deg, size) = sprintf("../figures/cyclo_%d_%s.png", deg, size)
+
+set logscale y
+
+
+DEG=50;
+
+do for [SIZE in "1 50"] {
+   plot file_gp(DEG, SIZE) u 2:3 ls 1 w p title "nfroots - average value",\
+        file_abs(DEG, SIZE) u 2:3 ls 2 w p title "Absolute method",\
+        file_rel(DEG, SIZE) u 2:3 ls 3 w p title "Relative method"
+
+   set terminal pngcairo
+   set output figure(DEG, SIZE)
+   replot
+}
+

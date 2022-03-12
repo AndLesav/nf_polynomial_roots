@@ -1,0 +1,36 @@
+set border lw 2
+set grid lw 1.5 lt 1 lc "grey"
+set key left top
+set key font ",12"
+set key box lw 1 width -3 height 1
+set xtics font ",12"
+set ytics font ",12" 
+
+set style line 1 dt 4 pt 5 ps 1 lw 2.5 lc "black" # cert
+set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"   # search cert
+set style line 4 dt  5 pt 6 lw 2.5 lc "dark-magenta"  # lll heur
+set style line 3 dt 3 pt 5 lw 2 lc "red" # prec cert
+
+
+
+file_cert(dg, de, size) = sprintf("../data/REL_COMPAR_LLL_degeq_cert_%d_%d_%d", dg, de, size)
+file_heur(dg, de, size) = sprintf("../data/REL_COMPAR_LLL_degeq_heur_%d_%d_%d", dg, de, size)
+
+figure(dg, de, size) =  sprintf("../figures/rel_lll_compar_degeq_%d_%d_%d.png", dg, de, size)
+
+
+DG=30
+DE=3
+SIZE=10;
+
+set logscale y
+
+plot file_cert(DG, DE, SIZE) u 1:2 w lp ls 1 title "Certified",\
+     file_cert(DG, DE, SIZE) u 1:3 w lp ls 2 title "Search certified",\
+     file_heur(DG, DE, SIZE) u 1:2 w lp ls 4 title "Heuristic",\
+     file_heur(DG, DE, SIZE) u 1:3 w lp ls 3 title "Precision certified"
+        
+
+set terminal pngcairo
+set output figure(DG, DE, SIZE)
+replot

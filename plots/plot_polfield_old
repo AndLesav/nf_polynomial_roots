@@ -1,0 +1,75 @@
+set border lw 2
+set grid lw 1.5 lt 1 lc "grey"
+set key bottom left
+set key font ",14"
+set xtics font ",12"
+set ytics font ",12" 
+# set ylabel "Time" font ",17"
+# set xlabel "Dimension" font ",17"
+
+set style line 1 dt 4 lw 3 lc "black" 
+set style line 2 dt 2 lw 3 lc "red"
+set style line 3 dt 3 lw 3 lc "blue"
+set style line 4 dt 4 lw 3 lc "olive"
+set style line 5 dt 5 lw 3 lc "grey"
+
+
+
+set logscale y
+
+
+
+plot "../OUTPUTS/POLFIELD_GP_complex_10_NEW" u 1:2 w lp ls 1 title "nfroots",\
+     "../OUTPUTS/POLFIELD_LLL_heur_complex_10_NEW" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur",\
+     "../OUTPUTS/POLFIELD_LLL_cert_complex_10_NEW" u 1:2 w lp ls 2 title "PolynomialRoots",\
+     "../OUTPUTS_BABAI/POLFIELD_GP_complex_10" u 1:2 w lp ls 4 title "nfroots",\
+     "../OUTPUTS_BABAI/POLFIELD_LLL_heur_complex_10" u 1:2 w lp ls 5 title "PolynomialRoots\\\_heur",\
+     "../OUTPUTS_BABAI/POLFIELD_LLL_cert_complex_10" u 1:2 w lp ls 6 title "PolynomialRoots",\
+
+
+
+# plot "../OUTPUTS/POLFIELD_GP_complex_10_NEW" u 1:2 w lp ls 1 title "nfroots",\
+     # "../OUTPUTS/POLFIELD_LLL_heur_complex_10_NEW" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur",\
+     # "../OUTPUTS/POLFIELD_LLL_cert_complex_10_NEW" u 1:2 w lp ls 2 title "PolynomialRoots",\
+
+
+# plot "../OUTPUTS/POLFIELD_LLL_heur_real_1_NEW" u 1:($3/$4) w lp ls 1 title "s(P)=1",\
+#      "../OUTPUTS/POLFIELD_LLL_heur_real_5_NEW" u 1:($3/$4) w lp ls 2 title "s(P)=5",\
+#      "../OUTPUTS/POLFIELD_LLL_heur_real_10_NEW" u 1:($3/$4) w lp ls 3 title "s(P)=10",
+
+
+
+# plot "../OUTPUTS/POLFIELD_GP_complex_1_NEW" u 1:2 w lp ls 1 title "nfroots",\
+     # "../OUTPUTS/POLFIELD_LLL_cert_complex_1_NEW" u 1:2 w lp ls 2 title "PolynomialRoots",\
+     # "../OUTPUTS/POLFIELD_LLL_heur_complex_1_NEW" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur",\
+
+
+# plot "../OUTPUTS/POLFIELD_GP_real1" u 1:2 w lp ls 1 title "nfroots",\
+#      "../OUTPUTS/POLFIELD_LLL_CERT_real1" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "../OUTPUTS/POLFIELD_LLL_HEUR_real1" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur",\
+
+
+# plot "../OUTPUTS/POLFIELD_GP_real5" u 1:2 w lp ls 1 title "nfroots",\
+#      "../OUTPUTS/POLFIELD_LLL_CERT_real5" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "../OUTPUTS/POLFIELD_LLL_HEUR_real5" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+# plot "../OUTPUTS/POLFIELD_GP_real10" u 1:2 w lp ls 1 title "nfroots",\
+#      "../OUTPUTS/POLFIELD_LLL_CERT_real10" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "../OUTPUTS/POLFIELD_LLL_HEUR_real10" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+
+# plot "../OUTPUTS/POLFIELD_GP_complex1" u 1:2 w lp ls 1 title "nfroots",\
+#      "../OUTPUTS/POLFIELD_LLL_CERT_complex1" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "../OUTPUTS/POLFIELD_LLL_HEUR_complex1" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+
+# plot "../OUTPUTS/POLFIELD_GP_complex5" u 1:2 w lp ls 1 title "nfroots",\
+#      "../OUTPUTS/POLFIELD_LLL_CERT_complex5" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "../OUTPUTS/POLFIELD_LLL_HEUR_complex5" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+
+# plot "../OUTPUTS/POLFIELD_GP_complex10" u 1:2 w lp ls 1 title "nfroots",\
+#      "../OUTPUTS/POLFIELD_LLL_CERT_complex10" u 1:2 w lp ls 2 title "PolynomialRoots",\
+#      "../OUTPUTS/POLFIELD_LLL_HEUR_complex10" u 1:2 w lp ls 3 title "PolynomialRoots\\\_heur"
+
+

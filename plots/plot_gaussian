@@ -1,0 +1,43 @@
+set border lw 2
+set grid lw 1.25 lt 1 lc "grey"
+set key below
+set key box lw 1 width 1  height 1
+set key font ",12"
+set xtics font ",12"
+set ytics font ",12" 
+
+
+set style line 1 dt 4 pt 5 ps 1 lw 2.5 lc "black" #gp
+set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"   #lll cert
+set style line 3 dt 5 pt 6 lw 2.5 lc "dark-magenta"  #lll heur
+set style line 4 dt 3 pt 5 lw 2 ps 0.75 lc "olive" #gp medians
+
+
+file(dim, type) = sprintf("../data/gh_%d_%s", dim, type)
+
+figure(type) = sprintf("../figures/gaussian_%s.png", type)
+
+key(dim) = sprintf("n=%d", dim)
+
+dim_RR(dim_start, i)=dim_start+i*5
+dim_CC(dim_CC, i)=2*floor((dim_start+i*5)/2)
+
+dim_start=15;
+
+
+type="real"
+
+plot for [i=0:7] file(dim_RR(dim_start,i), type) w lp lw 2 dt 1 pt i ps 1.25 title key(dim_RR(dim_start,i))
+
+set terminal pngcairo
+set output figure(type)
+replot
+
+
+type="complex"
+
+plot for [i=0:7] file(dim_CC(dim_start,i), type) w lp lw 2 dt 1 pt i ps 1.25 title key(dim_CC(dim_start,i))
+
+set terminal pngcairo
+set output figure(type)
+replot
