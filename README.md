@@ -1,6 +1,9 @@
 # nf_polynomial_roots
 Computing polynomial roots in number field through complex embeddings
-Code in support of the article "Computing roots of polynomials over number fields using complex embeddings"https://hal.archives-ouvertes.fr/hal-03608840
+
+Code in support of the article "Computing roots of polynomials over number fields using complex embeddings
+
+"https://hal.archives-ouvertes.fr/hal-03608840
 
 
 ## Authors
