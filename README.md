@@ -1,9 +1,10 @@
+
 # nf_polynomial_roots
 Computing polynomial roots in number field through complex embeddings
 
-Code in support of the article "Computing roots of polynomials over number fields using complex embeddings
+Code in support of the article "Computing roots of polynomials over number fields using complex embeddings"
 
-"https://hal.archives-ouvertes.fr/hal-03608840
+https://hal.archives-ouvertes.fr/hal-03608840
 
 
 ## Authors
@@ -13,6 +14,8 @@ Andrea Lesavourey.
 The code has been tested with:
     - Pari/Gp V2.13.1. https://pari.math.u-bordeaux.fr/
     - Magma V2.24-10   http://magma.maths.usyd.edu.au/magma/
+
+Plot scripts use Gnuplot.
 
 
 ## Warning
@@ -28,6 +31,15 @@ Bash scripts call on Gp or Magma scripts. Results of computations are printed in
 If one execute a given bash script  ./Script.sh  without argument, some help will be printed, giving the number of parameters required and a quick description of all parameters (obligatory and optional).
 
 
+## How to replicate results and plots from the paper?
+
+### Heuristics : Section 4
+- Figure 1 : Use script "GaussianHeuristic.sh" (computations in Magma) then "plot_gaussian"
+- Figures 2 and 3 : Use "SpecLLL.sh" (computations in Magma & Pari/Gp) then "plot_spec_lll"
+- Precision from norm, figure 16 : Use "PrecisionEvaluation.sh" then "plot_prec_eval"
+- Norm evaluation, figure 4 : Use "NormEvaluation.sh" then "plot_norm_eval"
+
+### Absolute method : Section 5
 
 
 ### Summary of the directories from root
