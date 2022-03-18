@@ -50,6 +50,10 @@ If one execute a given bash script  ./Script.sh  without argument, some help wil
 - Impact of #Z_K(f)/deg(f), Figure 7: Use `NbSolutions_absolute.sh` then `plot_nbsol_abs`
 
 ### Relative method : Section 5.3
+
+Some scripts comparing absolute and relative methods require to pre-compute defining polynomials which are then saved in the `./inputs` directory.
+This can be done using the scripts whose names are starting by `Field_creation`.
+
 - Impact of heuristics, Figure 8: Use `CompareEqDegree_relative.sh` and `CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and `plot_rel_lll_compar_size`
 - Abs vs Rel, #Z(f)/deg(f), Figure 9: Use `CompareNbSol_abs_rel.sh` then `plot_rel_nbsol`
 - Abs vs Rel, relative degree [L:K], Figure 10: Use `CompareRelDeg_abs_rel.sh` then `plot_rel_reldeg`
