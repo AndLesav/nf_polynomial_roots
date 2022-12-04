@@ -1,0 +1,98 @@
+set border lw 2
+set grid lw 1.25 lt 1 lc "grey"
+set key right bottom
+set key font ",12"
+set key box lw 1 width -1.3 height 0.5
+set xtics font ",12"
+set ytics font ",12" 
+# set ylabel "Time" font ",17"
+# set xlabel "Dimension" font ",17"
+
+
+set style line 1 dt 4 pt 5 ps 1.5 lw 2 lc "black" #gp
+set style line 2 dt 2 pt 9 ps 1.5 lw 2 lc "blue"   #lll abs
+set style line 3 dt 5 pt 6 ps 1.5 lw 2. lc "dark-magenta"  #lll rel
+set style line 4 dt 3 pt 5 ps 0.75 lw 2 lc "olive" #magma
+
+
+file_gp(version, de, dg, deg) = sprintf("../data/RelDegree_fixed_GP_%s_%d_%d_%d", version, de, dg, deg)
+file_abs(version, de, dg, deg) = sprintf("../data/RelDegree_fixed_LLL_abs_%s_%d_%d_%d", version, de, dg, deg)
+file_rel(version, de, dg, deg) = sprintf("../data/RelDegree_fixed_LLL_rel_%s_%d_%d_%d", version, de, dg, deg)
+file_magma(version, de, dg, deg) = sprintf("../data/RelDegree_fixed_MAGMA_%s_%d_%d_%d", version, de, dg, deg)
+
+figure(version, de, dg, deg) = sprintf("../figures/reldegree_fixed_%s_%d_%d_%d.png", version, de, dg, deg)
+
+average_gp(m1,m2,p)=m1*(1-p)+m2*p
+average_mgm(m1,m2,p)=m1*(1-p/100)+m2*p/100
+
+
+array EXP[5] = [2,3,5,7,11]
+array DG1[2] = [6,4]
+array DG2[3] = [15,10,6]
+
+
+
+
+DEG=10
+
+set logscale y
+
+
+# plot single
+version="single"
+do for [i=1:2:1] {
+   de = EXP[i]
+   dg = DG1[i]
+   plot file_gp(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 1 w lp title "nfroots",\
+        file_abs(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 2 w lp title "Absolute method",\
+        file_rel(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 3 w lp title "Relative method",\
+	file_magma(version, de, dg, DEG) u 1:(average_mgm($2,$3,$4)) ls 4 w lp title "Magma Roots	",\
+	
+   set terminal pngcairo
+   set output figure(version,de,dg,DEG)
+   replot
+}
+
+do for [i=1:3:1] {
+   de = EXP[i]
+   dg = DG2[i]
+   plot file_gp(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 1 w lp title "nfroots",\
+        file_abs(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 2 w lp title "Absolute method",\
+        file_rel(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 3 w lp title "Relative method",\
+	file_magma(version, de, dg, DEG) u 1:(average_mgm($2,$3,$4)) ls 4 w lp title "Magma Roots",\
+	
+   set terminal pngcairo
+   set output figure(version,de,dg,DEG)
+   replot
+}
+
+
+# #########################
+version="split"
+do for [i=1:2:1] {
+   de = EXP[i]
+   dg = DG1[i]
+   plot file_gp(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 1 w lp title "nfroots",\
+        file_abs(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 2 w lp title "Absolute method",\
+        file_rel(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 3 w lp title "Relative method",\
+	file_magma(version, de, dg, DEG) u 1:(average_mgm($2,$3,$4)) ls 4 w lp title "Magma Roots",\
+		
+   set terminal pngcairo
+   set output figure(version,de,dg,DEG)
+   replot
+
+}
+
+do for [i=1:3:1] {
+   de = EXP[i]
+   dg = DG2[i]
+   plot file_gp(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 1 w lp title "nfroots",\
+        file_abs(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 2 w lp title "Absolute method",\
+        file_rel(version, de, dg, DEG) u 1:(average_gp($2,$3,$4)) ls 3 w lp title "Relative method",\
+	file_magma(version, de, dg, DEG) u 1:(average_mgm($2,$3,$4)) ls 4 w lp title "Magma Roots	",\
+		
+   set terminal pngcairo
+   set output figure(version,de,dg,DEG)
+   replot
+
+}

@@ -31,12 +31,7 @@ CyclotomicsRelativeRoots(m, p, equation) = {
   pol1 = FF_pol_embedding_fam_nf(equation, M, P); 
 
 
-  /* norm of transformation from basis (eta^k)_k to (zeta^k)_k */
-  /* N = matrix(field_dim, field_dim\2); */
-  /* for (i = 0, field_dim\2-1, */
-  /* 	 N[,i+1] = Vecrev(liftall(eta_m^i ), field_dim)~; */
-  /*      ); */
-  /* Ninv = N^(-1); */
+  /* norm of transformation from basis (zeta_k + zeta^(-k))_k to (zeta^k)_k */
   N = matrix(field_dim, field_dim\2);
   for (i = 0, field_dim\2-1,
 	 N[,i+1] = Vecrev(liftall(zeta_m^i + zeta_m^(-i) ), field_dim)~;
@@ -47,7 +42,7 @@ CyclotomicsRelativeRoots(m, p, equation) = {
   
   /* as always ; prec eval */
   [prec, ns, v] = round(Precision_eval(p, equation, 0));
-  prec = prec + round(log(log(field_dim\2))*log(field_dim\2)*(field_dim\2) + log(field_dim)/2*(field_dim\4));
+  prec += round(log(log(field_dim\2))*log(field_dim\2)*(field_dim\2) + log(field_dim)/2*(field_dim\4));
   prec += round(log(norml2(Ninv))*field_dim);
   prec_add = v\2;
   
@@ -86,13 +81,13 @@ CyclotomicsRelativeRoots(m, p, equation) = {
 	my(mink = [R[i], conj(R[i])]); /* pick a root and its conj */
 
       ginf = Meinv*(mink~);
-      /* print(ginf); */
+
 
       default(realprecision, prec\3);
       /* deconding in K+ */
       [b1, g1] = MyDecodeBabai_2([real(ginf[1])], L, QR, prec, 1); /* first coord */
       g1 = g1~;
-      /* print(g1); */
+
       if (b1,
 	  /* second coord */
 	  [b2, g2] = MyDecodeBabai_2([real(ginf[2])], L, QR, prec, 1); 
@@ -100,8 +95,6 @@ CyclotomicsRelativeRoots(m, p, equation) = {
 	  );
       
       if (b1*b2==1,
-	  /* g1 = sum(j=1, field_dim\2, g1[j]*eta_m^(j-1)); */
-	  /* g2 = sum(j=1, field_dim\2, g2[j]*eta_m^(j-1)); */
 
 	  g1 = g1[1] + sum(j=2, field_dim\2, g1[j]*Bp[j]);
 	  g2 = g2[1] + sum(j=2, field_dim\2, g2[j]*Bp[j]);

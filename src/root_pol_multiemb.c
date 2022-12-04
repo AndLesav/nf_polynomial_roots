@@ -341,39 +341,39 @@ MyDecodeBabai_2(embeddings, M, G, prec, {heur=1})=
 
 
 
-/* ind = sum e_i*dv[i]^i<--> [e_i]_i  */
-IndexToExponent_multi(ind, dv)=
-  {
-   my(i, j, e, d, n, p);
-   n = length(dv);
+/* /\* ind = sum e_i*dv[i]^i<--> [e_i]_i  *\/ */
+/* IndexToExponent_multi(ind, dv)= */
+/*   { */
+/*    my(i, j, e, d, n, p); */
+/*    n = length(dv); */
    
-   j = ind-1;
-   e = vector(n);
-   /* print(e) */
-   for(i=1, n,
-	 d = dv[i+1..n];
-       p = vecprod(d);
-       [e[i], j] = divrem(j, p)+1;
-       );
-   return(e);
-  };
+/*    j = ind-1; */
+/*    e = vector(n); */
+/*    /\* print(e) *\/ */
+/*    for(i=1, n, */
+/* 	 d = dv[i+1..n]; */
+/*        p = vecprod(d); */
+/*        [e[i], j] = divrem(j, p)+1; */
+/*        ); */
+/*    return(e); */
+/*   }; */
 
 
-/* ind = sum e_i*dv[i]^i<--> [e_i]_i  */
-ExponentToIndex_multi(e, dv)=
-  {
-   my(i, j, ind, d, n, p);
-   n = length(dv);
-   ind = 0;
-   /* print(e) */
-   for(i=1, n,
-       	 d = dv[i+1..n];
-       p = vecprod(d);
-       ind += (e[i]-1)*p;
-       /* [e[i], j] = divrem(j, p)+1; */
-       );
-   return(ind+1);
-  };
+/* /\* ind = sum e_i*dv[i]^i<--> [e_i]_i  *\/ */
+/* ExponentToIndex_multi(e, dv)= */
+/*   { */
+/*    my(i, j, ind, d, n, p); */
+/*    n = length(dv); */
+/*    ind = 0; */
+/*    /\* print(e) *\/ */
+/*    for(i=1, n, */
+/*        	 d = dv[i+1..n]; */
+/*        p = vecprod(d); */
+/*        ind += (e[i]-1)*p; */
+/*        /\* [e[i], j] = divrem(j, p)+1; *\/ */
+/*        ); */
+/*    return(ind+1); */
+/*   }; */
 
 
 /* FirstSameInd(e, old_e)= */
@@ -390,132 +390,132 @@ ExponentToIndex_multi(e, dv)=
 
 
 
-FirstIndBefore_multi(e, k, dv)=
-  {
-   my(b=0, l=-1);
-   while(!b && (l < (k-1)),
-	 l += 1;
-	 /* if(p==45,print(l);); */
-	 b = (e[k-l]!=dv[k-l]);
-	 );
-   return([b, k-l]);
-  };
+/* FirstIndBefore_multi(e, k, dv)= */
+/*   { */
+/*    my(b=0, l=-1); */
+/*    while(!b && (l < (k-1)), */
+/* 	 l += 1; */
+/* 	 /\* if(p==45,print(l);); *\/ */
+/* 	 b = (e[k-l]!=dv[k-l]); */
+/* 	 ); */
+/*    return([b, k-l]); */
+/*   }; */
 
 
-NextInd_multi(e, dv, old_e)=
-  {
-   my(e_new, k, l, b, b1, k1, n);
-   n = length(e);
-   /* q = (length(e)-1)/2; */
-   /* b1 = prod(j=1, q, e[2*j-1+r1]==e[2*j+r1]); */
-   e_new = e;
-   if (prod(j=1, length(e), e[j]==dv[j]), return(e););
+/* NextInd_multi(e, dv, old_e)= */
+/*   { */
+/*    my(e_new, k, l, b, b1, k1, n); */
+/*    n = length(e); */
+/*    /\* q = (length(e)-1)/2; *\/ */
+/*    /\* b1 = prod(j=1, q, e[2*j-1+r1]==e[2*j+r1]); *\/ */
+/*    e_new = e; */
+/*    if (prod(j=1, length(e), e[j]==dv[j]), return(e);); */
    
-   [b, k] = FirstSameInd(e, old_e);
-   /* print([b, k]); */
-   if (b, return(e));
+/*    [b, k] = FirstSameInd(e, old_e); */
+/*    /\* print([b, k]); *\/ */
+/*    if (b, return(e)); */
    
-   while (!b,
-	  /* if(e_new[1]==45,print(e_new " " k);); */
-	  [b1, k1] = FirstIndBefore_multi(e_new, k, dv);
-	  /* print([b1, k1]); */
-	  if(!b1,
-	     return(e_new); ,
+/*    while (!b, */
+/* 	  /\* if(e_new[1]==45,print(e_new " " k);); *\/ */
+/* 	  [b1, k1] = FirstIndBefore_multi(e_new, k, dv); */
+/* 	  /\* print([b1, k1]); *\/ */
+/* 	  if(!b1, */
+/* 	     return(e_new); , */
 	     
-	     e_new[k1]=e_new[k1]+1;
-	     for(l=k1+1, n, e_new[l]=1);
+/* 	     e_new[k1]=e_new[k1]+1; */
+/* 	     for(l=k1+1, n, e_new[l]=1); */
 	     
-	     );
-	  [b, k] = FirstSameInd(e_new, old_e);
-	  /* print([b, k]); */
-	  );
+/* 	     ); */
+/* 	  [b, k] = FirstSameInd(e_new, old_e); */
+/* 	  /\* print([b, k]); *\/ */
+/* 	  ); */
    
-   return(e_new);
-  };
+/*    return(e_new); */
+/*   }; */
 
 
-UpdatePair_conj(e, d) =
-  {
-   /* print(e); */
-   /* (e[1]==d && e[2]==d, return([0, [1, 1]]); , */
-   if(e[1]==e[2], return([0, [e[1], e[2]]]); ,
-      e[1]<e[2], return([1, [e[1]+1, e[1]+1]]); ,
-      e[2]<e[1], return([1, [e[1], e[1]]]); 
-      );
-  };
+/* UpdatePair_conj(e, d) = */
+/*   { */
+/*    /\* print(e); *\/ */
+/*    /\* (e[1]==d && e[2]==d, return([0, [1, 1]]); , *\/ */
+/*    if(e[1]==e[2], return([0, [e[1], e[2]]]); , */
+/*       e[1]<e[2], return([1, [e[1]+1, e[1]+1]]); , */
+/*       e[2]<e[1], return([1, [e[1], e[1]]]);  */
+/*       ); */
+/*   }; */
 
 
-UpdatePair_conj_cond(e, d) =
-  {
-   /* print(e); */
-   if (e[1]==d && e[2]==d, return([0, [1, 1]]); ,
-       e[1]==e[2], return([1, [e[1]+1, e[2]+1]]); ,
-      e[1]<e[2], return([1, [e[1]+1, e[1]+1]]); ,
-      e[2]<e[1], return([1, [e[1], e[1]]]); 
-      );
-  };
+/* UpdatePair_conj_cond(e, d) = */
+/*   { */
+/*    /\* print(e); *\/ */
+/*    if (e[1]==d && e[2]==d, return([0, [1, 1]]); , */
+/*        e[1]==e[2], return([1, [e[1]+1, e[2]+1]]); , */
+/*       e[1]<e[2], return([1, [e[1]+1, e[1]+1]]); , */
+/*       e[2]<e[1], return([1, [e[1], e[1]]]);  */
+/*       ); */
+/*   }; */
 
 
 
-NextConj_multi_simple(e, dv, r1) =
-  {
-   my(n, r2, b, a, e_new, e_pair);
-   n = length(e);
-   r2 = (n-r1)/2;
+/* NextConj_multi_simple(e, dv, r1) = */
+/*   { */
+/*    my(n, r2, b, a, e_new, e_pair); */
+/*    n = length(e); */
+/*    r2 = (n-r1)/2; */
    
-   if (prod(j=1, n, e[j]==dv[j]), return(e););
+/*    if (prod(j=1, n, e[j]==dv[j]), return(e);); */
  
-   e_new = e;
+/*    e_new = e; */
    
-   for (i=1, r2,
+/*    for (i=1, r2, */
 	  
-	  [a, e_pair] = UpdatePair_conj(e_new[r1+2*i-1..r1+2*i], dv[r1+2*i-1]);
+/* 	  [a, e_pair] = UpdatePair_conj(e_new[r1+2*i-1..r1+2*i], dv[r1+2*i-1]); */
 
-	/* print(a); */
-	if (a,
+/* 	/\* print(a); *\/ */
+/* 	if (a, */
 
-	    e_new[r1+2*i-1] = e_pair[1];
-	    e_new[r1+2*i] = e_pair[2];
+/* 	    e_new[r1+2*i-1] = e_pair[1]; */
+/* 	    e_new[r1+2*i] = e_pair[2]; */
 
-	    for (j = i+1, r2,
-		   e_new[r1+2*j-1] = 1;
-		 e_new[r1+2*j] = 1;
-		 );
+/* 	    for (j = i+1, r2, */
+/* 		   e_new[r1+2*j-1] = 1; */
+/* 		 e_new[r1+2*j] = 1; */
+/* 		 ); */
 	    
-	    return(e_new);
-	    );
+/* 	    return(e_new); */
+/* 	    ); */
 
-	);
+/* 	); */
 
    
-   /* for (i=0, r2-1, */
+/*    /\* for (i=0, r2-1, *\/ */
 	  
-   /* 	  [a, e_pair] = UpdatePair_conj_cond(e_new[n-2*i-1..n-2*i], dv[n-2*i-1]); */
-   /* 	/\* print(e_pair); *\/ */
-   /* 	e_new[n-2*i-1] = e_pair[1]; */
-   /* 	e_new[n-2*i] = e_pair[2]; */
+/*    /\* 	  [a, e_pair] = UpdatePair_conj_cond(e_new[n-2*i-1..n-2*i], dv[n-2*i-1]); *\/ */
+/*    /\* 	/\\* print(e_pair); *\\/ *\/ */
+/*    /\* 	e_new[n-2*i-1] = e_pair[1]; *\/ */
+/*    /\* 	e_new[n-2*i] = e_pair[2]; *\/ */
 	
-   /* 	if (a, */
+/*    /\* 	if (a, *\/ */
 	    
-   /* 	    return(e_new)); */
-   /* 	); */
-   /* print(e_new); */
-   /* print(dv); */
+/*    /\* 	    return(e_new)); *\/ */
+/*    /\* 	); *\/ */
+/*    /\* print(e_new); *\/ */
+/*    /\* print(dv); *\/ */
 
-   /* for (i=0, r1-1, */
+/*    /\* for (i=0, r1-1, *\/ */
 
-   /* 	  if (e_new[r1-i]!=dv[r1-i], */
-   /* 	      return(e_new);, */
+/*    /\* 	  if (e_new[r1-i]!=dv[r1-i], *\/ */
+/*    /\* 	      return(e_new);, *\/ */
 
-   /* 	      e_new[r1-i]=1; */
+/*    /\* 	      e_new[r1-i]=1; *\/ */
 	      
-   /* 	      ); */
+/*    /\* 	      ); *\/ */
 	  
-   /* 	); */
+/*    /\* 	); *\/ */
 
-   return(e);
+/*    return(e); */
    
-  };
+/*   }; */
 
 
 

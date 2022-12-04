@@ -129,7 +129,7 @@ Equation_creation(pol_field, size_root, degree_pol, size_pol, type) = {
 
 
 /* create element in nf[X]  */
-Random_el_nf(pol_field, size)={
+Random_el_nf(pol_field, size) = {
   my(R,  a);
   R = (2^size+1) * y^(poldegree(pol_field)-1);
   a =  Mod(random(R), pol_field);
@@ -138,7 +138,7 @@ Random_el_nf(pol_field, size)={
 
 
 /* create equation in nf[X] split over nf */
-Equation_creation_nf_split(pol_field, degree_eq, size_eq, {type="uniform", norms=0})= {
+Equation_creation_nf_split(pol_field, degree_eq, size_eq, {type="uniform", norms=0}) = {
   my(R, eq, s, b, v, N);
   if (type=="uniform",  R = (2^size_eq+1) * y^(poldegree(pol_field)-1); ,
       s = random(2)*size_eq;
@@ -156,10 +156,15 @@ Equation_creation_nf_split(pol_field, degree_eq, size_eq, {type="uniform", norms
 
 
 Equation_creation_nf_multiquad(pol_field, degree_eq, size_roots) = {
-  my(v);
-  v = vector(degree_eq, i, Random_el_nf(pol_field, size_roots));
+  my(v, t, s);
+  /* t = Random_el_nf(pol_field, size_roots)^2; */
+  /* s = round(abs(log(norml2(liftall(t)))/(log(2)))); */
+  /* v = vector(degree_eq, i, Random_el_nf(pol_field, s)); */
+  /* v = vector(degree_eq, i, Random_el_nf(pol_field, 2*size_roots)); */
+  v = vector(degree_eq, i, Random_el_nf(pol_field, size_roots)^2+1);
   return(prod(i=1, degree_eq, x^2-v[i]));   
 };
+
 
 
 /* #################### FUNCTIONS SPECIFIC TO RELATIVE EXT #################### */
@@ -208,6 +213,30 @@ Pol_rel_ext_creation(dim, size_coeff, {varg=z, vare=y}) =
   };
 
 
+/* create cyclo rel ext. fom scratch */
+Cyclo_rel_ext_creation(prime, exp_g, exp_e, {varg=z, vare=y}) = {
+  my(p, q, pabs);
+
+  p = polcyclo(prime^exp_g, varg);
+  q = vare^(prime^exp_e)-varg;
+  pabs = polcyclo(prime^(exp_g + exp_e));
+  
+  return([p, q, pabs]);
+};
+
+/* create cyclo rel ext. fom scratch */
+Cyclo_rel_ext_creation_2(cond, prime, exp, {varg=z, vare=y}) = {
+  my(p, q, pabs);
+  
+  p = polcyclo(cond/(prime^exp), varg);
+  q = vare^(dim_ext)-varg;
+  pabs = polcyclo(prime^(exp_g + exp_e));
+  
+  return([p, q, pabs]);
+};
+
+
+
 /* ELEMENTS AND POL CREATION */
 
 /* create g in Ke/Kg ; output is a multivar. pol. */
@@ -251,65 +280,67 @@ Rel_pol_creation(dim_vec, deg, s_coeff, {varp=x, varg=z, vare=y})=
 
 /* create Pol in Ke/Kg[x] ; output is a multivar. pol. */
 /* one can retrieve Pol in vector form by applying Multipol_to_vec */
-Rel_pol_creation_mod(pol_vec, deg, s_coeff, {varp=x, varg=z, vare=y})=
-  {
-    my(a);
-    /* w = vecsum(powers(varp, deg)); */
-    a = vector(deg+1, i,
-	       Rel_element_creation_mod(pol_vec, s_coeff, varg, vare));
-    return(Pol(a, varp));
-  };
+Rel_pol_creation_mod(pol_vec, deg, s_coeff, {varp=x, varg=z, vare=y})=  {
+  my(a);
+  /* w = vecsum(powers(varp, deg)); */
+  a = vector(deg+1, i,
+	     Rel_element_creation_mod(pol_vec, s_coeff, varg, vare));
+  return(Pol(a, varp));
+};
 
 
 
 /* create equation of the form h = q(g) with q in ZZ[X] or Ke/Kg[X] */
-Rel_equation_creation(pol_vec, s_root, degree_eq, s_eq, type)=
-  {
-    my(g, h, q, field_dim);
+Rel_equation_creation(pol_vec, s_root, degree_eq, s_eq, type)= {
+  my(g, h, q, field_dim);
    
-    field_dim = poldegree(pol_field);
+  field_dim = poldegree(pol_field);
    
-    g = Rel_element_creation_mod(pol_vec, s_root, variable(pol_vec[1]),\
-				 variable(pol_vec[2]));
+  g = Rel_element_creation_mod(pol_vec, s_root, variable(pol_vec[1]),\
+			       variable(pol_vec[2]));
   
-    if (type==0,
+  if (type==0,
 
-	q = Pol_creation_integral(degree_eq, s_eq); ,
+      q = Pol_creation_integral(degree_eq, s_eq); ,
        
-	q = Rel_pol_creation(dim_vec, degree_eq, s_eq, x, variable(pol_vec[1]),\
-			     variable(pol_vec[2]));
+      q = Rel_pol_creation(dim_vec, degree_eq, s_eq, x, variable(pol_vec[1]),\
+			   variable(pol_vec[2]));
 
-	);
+      );
    
-    h = subst(q, x, g);
+  h = subst(q, x, g);
    
-    /* h = Vecrev(lift(h)); */
+  /* h = Vecrev(lift(h)); */
    
-    return([g, h, q])
-  };
-
-
-/* create equation in Ke/Kg[X] split over Ke/Kg */
-Rel_equation_creation_split(pol_vec, degree_eq, size_eq)=
-  {
-    my(v, eq);
-   
-    v = vector(degree_eq, i, Rel_element_creation_mod(pol_vec, size_eq));
-    eq = prod(i = 1, degree_eq, x - v[i]);
-   
-    return([eq, v])
-  };
+  return([g, h, q])
+};
 
 
 /* create equation in Ke/Kg[X] split over Ke/Kg */
-Rel_equation_creation_multiquad(pol_vec, degree_eq, size_eq)=
-  {
-    my(v, eq);
-   
-    v = vector(degree_eq, i, Rel_element_creation_mod(pol_vec, size_eq));
-    eq = prod(i = 1, degree_eq, x^2 - v[i]);
-   
-    return([eq, v])
-  };
+Rel_equation_creation_split(pol_vec, degree_eq, size_eq)= {
+  my(v, eq);
+  if (degree_eq == 0,
+      eq = 1; ,
+      v = vector(degree_eq, i, Rel_element_creation_mod(pol_vec, size_eq));
+      eq = prod(i = 1, degree_eq, x - v[i]);
+      );
 
+  return([eq, v])
+};
+
+
+/* create equation in Ke/Kg[X] split over Ke/Kg */
+Rel_equation_creation_multiquad(pol_vec, degree_eq, size_eq)=   {
+  my(v, eq, s, dg, de, t);
+  dg = poldegree(pol_vec[1]);
+  de = poldegree(pol_vec[2]);
+  /* t = Rel_element_creation_mod(pol_vec, size_eq)^2;   */
+  /* s = round(2*abs(log(norml2(liftall(t)))/(log(2)*sqrt(de*dg)))); */
+  /* v = vector(degree_eq, i, Rel_element_creation_mod(pol_vec, s)); */
+  /* v = vector(degree_eq, i, Rel_element_creation_mod(pol_vec, 2*size_eq)); */
+  v = vector(degree_eq, i, Rel_element_creation_mod(pol_vec, size_eq)^2+1);
+  eq = prod(i = 1, degree_eq, x^2 - v[i]);
+
+  return([eq, v])
+};
 

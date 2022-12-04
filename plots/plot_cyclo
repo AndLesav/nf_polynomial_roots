@@ -11,27 +11,43 @@ set ytics font ",12"
 
 set style line 1 dt 1 pt 5 ps 1 lw 2.5 lc "black" #gp
 set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"   #lll abs
-set style line 3 dt  5 pt 6 lw 2.5 lc "dark-magenta"  #lll rel
+set style line 3 dt 5 pt 6 lw 2.5 lc "dark-magenta"  #lll rel
 
 
-file_gp(deg, size) = sprintf("../data/CYCLO_GP_%d_%s", deg, size)
-file_abs(deg, size) = sprintf("../data/CYCLO_LLL_abs_%d_%s", deg, size)
-file_rel(deg, size) = sprintf("../data/CYCLO_LLL_rel_%d_%s", deg, size)
+file_gp_good(deg, size) = sprintf("../data/CYCLO_GP_good_%d_%s", deg, size)
+file_abs_good(deg, size) = sprintf("../data/CYCLO_LLL_abs_good_%d_%s", deg, size)
+file_rel_good(deg, size) = sprintf("../data/CYCLO_LLL_rel_good_%d_%s", deg, size)
 
-figure(deg, size) = sprintf("../figures/cyclo_%d_%s.png", deg, size)
+file_gp_bad(deg, size) = sprintf("../data/CYCLO_GP_bad_%d_%s", deg, size)
+file_abs_bad(deg, size) = sprintf("../data/CYCLO_LLL_abs_bad_%d_%s", deg, size)
+file_rel_bad(deg, size) = sprintf("../data/CYCLO_LLL_rel_bad_%d_%s", deg, size)
+
+
+figure_good(deg, size) = sprintf("../figures/cyclo_good_%d_%s.png", deg, size)
+figure_bad(deg, size) = sprintf("../figures/cyclo_bad_%d_%s.png", deg, size)
 
 set logscale y
 
 
 DEG=50;
 
-do for [SIZE in "1 50"] {
-   plot file_gp(DEG, SIZE) u 2:3 ls 1 w p title "nfroots - average value",\
-        file_abs(DEG, SIZE) u 2:3 ls 2 w p title "Absolute method",\
-        file_rel(DEG, SIZE) u 2:3 ls 3 w p title "Relative method"
+do for [SIZE in "50"] {
+   plot file_gp_good(DEG, SIZE) u 2:3 ls 1 w p title "nfroots - average value",\
+        file_abs_good(DEG, SIZE) u 2:3 ls 2 w p title "Absolute method",\
+        file_rel_good(DEG, SIZE) u 2:3 ls 3 w p title "Relative method"
 
    set terminal pngcairo
-   set output figure(DEG, SIZE)
+   set output figure_good(DEG, SIZE)
    replot
 }
 
+
+do for [SIZE in "50"] {
+   plot file_gp_bad(DEG, SIZE) u 2:3 ls 1 w p title "nfroots - average value",\
+        file_abs_bad(DEG, SIZE) u 2:3 ls 2 w p title "Absolute method",\
+        file_rel_bad(DEG, SIZE) u 2:3 ls 3 w p title "Relative method"
+
+   set terminal pngcairo
+   set output figure_bad(DEG, SIZE)
+   replot
+}

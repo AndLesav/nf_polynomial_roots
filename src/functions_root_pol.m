@@ -19,11 +19,10 @@ Fplll := function(matrix: mat_transf:=false, Delta:=0.99)
     else
 	dim := Nrows(matrix);
     end if;
-    /* print output_file; */
+        
     string := Sprintf("../src/script_magma_fplll.sh %o %o %o %o %o %o", pre_fplll, matrix_name, output_file, print_file, dim,  Delta);
-    /* string := "./script_magma_fplll.sh" cat " " cat pre_fplll cat " " cat matrix_name cat " " cat output_file cat " " cat print_file cat " " cat IntegerToString(dim) cat " ;"; */
     System(string);
-    /* print "fplll launched"; */
+
     a := Read(print_file);
     mat_name := eval a;
     uni := 0;
@@ -37,7 +36,7 @@ end function;
 
 
 /* LLL with options: if simple then computes unitary matrix 
-version is either magma either fplll*/
+version is either magma either fplll */
 MyLLL := function(M: mat_transf:=false, Delta := 0.99, version:="fplll")
     if (version eq "magma") then
 	if not mat_transf then
@@ -86,7 +85,8 @@ MyLLL_precomp := function(A: Delta:=0.75, version:="fplll", index:=2)
 end function;
 
 
-/* ######## Creation of a number field basis' lattice ######## */
+/* ######################################################### */
+/* ######## Creation of a number field basis lattice ######## */
 /* ######## use of a real or complex embedding ######## */
 /* ######################################################### */
 
@@ -127,17 +127,23 @@ end function;
 
 
 
+/* ################################################################# */
+/* #                     ELEMENTS FUNCTIONS                        # */
+/* ################################################################# */
 
 Embedding_element := function(h, K, B, precision)
     return &+ [RealField(precision)!h[i]*B[i] : i in [1..#h]];
 end function;
 
 
+nf_random_elt := function(K, size)
+    return K!(&+[Random(-2^size_coeff, 2^size_coeff)*(K.1)^j : j in [1..Degree(K)]]);
+end function;
+
+
 /* ################################################################# */
-/* ################### POLYNOMIAL GENERATIONS ######################*/
-/* ############################################################### */
-
-
+/* #                     POLYNOMIAL GENERATIONS                     #*/
+/* ################################################################# */
 
 
 Pol_field_creation_real := function(field_dim, size_coeff)
@@ -188,14 +194,14 @@ Pol_field_creation := function(field_dim, size_coeff: supp:=1)
 	Include(~L_P, P);
     end for;    
     r1 := 0;
-    K<a> := (AbsoluteField(NumberField(L_P)));
+    K<a> := (AbsoluteField(NumberField(L_P: Check:=false)));
     P := q!DefiningPolynomial(K);
-    return P;
+    return P, K;
 end function;    
 
 
 /* integral polynomial with degree=deg with random coeff in 
-                           [-10^size_coeff, 10^size_coeff]  */
+                           [-2^size_coeff, 2^size_coeff]  */
 Pol_creation_integral := function(deg, size_coeff)
     p<x> := PolynomialRing(Integers());
     return p![Random(-2^size_coeff, 2^size_coeff) : i in [0..deg]];
@@ -218,10 +224,15 @@ Pol_creation_field := function(K, deg, size_coeff: supp:=[1,1])
 end function;
 
 
-Pol_field_creation_tower := function(extensions_dim, size_coeff: supp := [1,1,1])
+Pol_field_creation_tower := function(extensions_dim, size_coeff: supp := [1,1,1],
+								 real := true)
     local p, q, x, y;
     p<x> := PolynomialRing(Integers());
-    L := [* Pol_field_creation(extensions_dim[1], size_coeff: supp:=supp[1]) *];
+    if real then
+	L := [* Pol_field_creation(extensions_dim[1], size_coeff: supp:=supp[1]) *];
+    else
+	L := [* Pol_field_creation_complex(extensions_dim[1], size_coeff) *];
+    end if;
     /* print "ground field created"; */
     K := NumberField(L[#L]: Check:=false);
     /* local q, y; */
@@ -257,12 +268,39 @@ end function;
 
 
 
+/* polynomial of degree deg with coefficients in K
+   coefficients are elements in ZZ[K.1]       */
+Equation_creation_field_split := function(K, deg, size_coeff)
+    local p, x;
+    p<x> := PolynomialRing(K);
+    equation := 1;
+    for i in [1..deg] do
+	coeff := K!(&+[Random(-2^size_coeff, 2^size_coeff)*(K.1)^j : j in [1..Degree(K)]]);
+	equation *:= (x - coeff);
+    end for;
+    return equation;
+end function;
+
+/* polynomial of degree deg with coefficients in K
+   coefficients are elements in ZZ[K.1]       */
+Equation_creation_field_multiquad := function(K, deg, size_coeff)
+    local p, x;
+    p<x> := PolynomialRing(K);
+    equation := 1;
+    for i in [1..deg] do
+	coeff := K!&+[Random(-2^size_coeff, 2^size_coeff)*K.1^j : j in [1..Degree(K)]];
+	equation *:= (x^2 - (coeff^2+1));
+    end for;
+    return equation;
+end function;
+
+
 /* lambda_1 estimation by Gaussian heuristic */
 L1_est := function(vol, rank: est:="gh")
-if est eq "gh" then 
-    lambda_1 := Sqrt(rank/(2*Pi(RealField())*Exp(1)))*Root(vol, rank);
-else
-    lambda_1 := Root(vol*Gamma(rank/2+1)/(Pi(RealField())^(rank/2)), rank);
-end if;
-return lambda_1;
+    if est eq "gh" then 
+	lambda_1 := Sqrt(rank/(2*Pi(RealField())*Exp(1)))*Root(vol, rank);
+    else
+	lambda_1 := Root(vol*Gamma(rank/2+1)/(Pi(RealField())^(rank/2)), rank);
+    end if;
+    return lambda_1;
 end function;

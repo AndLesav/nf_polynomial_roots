@@ -1,6 +1,6 @@
 set border lw 2
 set grid lw 1.5 lt 1 lc "grey"
-set key center right
+set key top right
 set key font ",13"
 set key box lw 1 width 1 height 0.2
 set xtics font ",12"
@@ -14,11 +14,11 @@ set style line 5 dt 4 pt 8 lw 2.5 ps 1 lc "red"
 
 
 
-file(type,size_pol,size_roots) = sprintf("../data/prec_eval_%s_%d_%d", type, size_pol, size_roots)
+file(type,size_pol,size_roots) = sprintf("../data/prec_eval_maxorder_%s_%d_%d", type, size_pol, size_roots)
 
-figure(type,size_pol) = sprintf("../figures/prec_eval_%s_%d.png", type,size_pol)
+figure(type,size_pol) = sprintf("../figures/prec_eval_maxorder_%s_%d.png", type, size_pol)
 
-ratio(prec,dim,size) = prec/(1 + (log(dim)*log(log(dim))/(log(2)*size+log(dim)/2)))
+ratio(prec,dim,size) = prec/(1 + (log(dim)*log(log(dim)))/(log(2)*size+log(dim)/2))
 
 
 TYPE="real"
@@ -29,18 +29,8 @@ plot file(TYPE,SIZE_POL,1) u ($1):(ratio($3,$1,1)) ls 1 w lp title "s=1",\
      file(TYPE,SIZE_POL,50) u ($1):(ratio($3,$1,50)) ls 3 w lp title "s=50",\
      file(TYPE,SIZE_POL,75) u ($1):(ratio($3,$1,75)) ls 4 w lp title "s=75",\
      file(TYPE,SIZE_POL,100) u ($1):(ratio($3,$1,100)) ls 5 w lp title "s=100"
+
 set terminal pngcairo
 set output figure(TYPE,SIZE_POL)
-replot 
-
-
-SIZE_POL=5
-
-plot file(TYPE,SIZE_POL,1) u ($1):(ratio($3,$1,1)) ls 1 w lp title "s=1",\
-     file(TYPE,SIZE_POL,25) u ($1):(ratio($3,$1,25)) ls 2 w lp title "s=25",\
-     file(TYPE,SIZE_POL,50) u ($1):(ratio($3,$1,50)) ls 3 w lp title "s=50",\
-     file(TYPE,SIZE_POL,75) u ($1):(ratio($3,$1,75)) ls 4 w lp title "s=75",\
-     file(TYPE,SIZE_POL,100) u ($1):(ratio($3,$1,100)) ls 5 w lp title "s=100"
-set terminal pngcairo
-set output figure(TYPE,SIZE_POL)
-replot 
+set yrange [0.3:1.4]
+replot

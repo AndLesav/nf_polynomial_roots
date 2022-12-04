@@ -19,7 +19,6 @@ FF_basis(pol_field, s, N) = {
        j = 1+random(length(R));
        a = R[j];
        B = vector(n, i, a^(i-1));
-       /* print(B); */
        M[i,] = B;
        );
   return([M, P]);
@@ -100,7 +99,6 @@ FF_test_vec(v, P) = {
   while (b &&  i < length(P)+1,
 	 b *= (v[i]==Mod(0, P[i]));
 	 i += 1;
-	 /* print(i); */
 	 );
   return(b);
 };
@@ -122,7 +120,6 @@ FF_rel_basis(pol_vec, s, N) = {
   P = [];
    
   for (i = 1, N,
-	 /* print(i); */
 	 b = 0;
        while (!b,
 	       
@@ -133,12 +130,11 @@ FF_rel_basis(pol_vec, s, N) = {
 		     p = randomprime(2^s);
 
 		     R = polrootsmod(pol_vec[1], p);
-		     /* print(R); */
 		     );
 
 	      j = 1+random(length(R));
 	      a = R[j];
-	      /* print(a); */
+
 	      Bg = vector(dg, i, a^(i-1));
 
 	      pe = FF_pol_embedding_nf(pol_vec[2], Bg, p);
@@ -165,9 +161,6 @@ FF_rel_element_embedding(g, pol_vec, B, p) = {
 	   
   return(B[2]*w~);
    
-  /* v = vector(length(g), i, Element_embedding(g[i], Bg)); */
-   
-  /* return(Me*(v~)); */
 };
 
 
@@ -189,9 +182,6 @@ FF_rel_element_embedding_fam(g, pol_vec, B_vec, P) = {
    
   return(v);
    
-  /* v = vector(length(g), i, Element_embedding(g[i], Bg)); */
-   
-  /* return(Me*(v~)); */
 };
 
 

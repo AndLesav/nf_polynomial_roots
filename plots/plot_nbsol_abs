@@ -14,15 +14,15 @@ set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"   #lll cert
 set style line 3 dt  5 pt 6 lw 2.5 lc "dark-magenta"  #lll heur
 set style line 6 dt 3 pt 5 lw 2 ps 0.75 lc "olive" #gp medians
 
-dim = 25
+dim = 50
 
 file_RR_gp(dim, frac) = sprintf("../data/NB_SOLUTIONS_GP_real_%s_%s", dim, frac);
 file_RR_cert(dim, frac) = sprintf("../data/NB_SOLUTIONS_LLL_cert_real_%s_%s", dim, frac);
-file_RR_heur(dim, frac) = sprintf("../data/NB_SOLUTIONS_LLL_HEUR_real_%s_%s", dim, frac);
+file_RR_heur(dim, frac) = sprintf("../data/NB_SOLUTIONS_LLL_heur_real_%s_%s", dim, frac);
 
 file_CC_gp(dim, frac) = sprintf("../data/NB_SOLUTIONS_GP_complex_%s_%s", dim, frac);
 file_CC_cert(dim, frac) = sprintf("../data/NB_SOLUTIONS_LLL_cert_complex_50_25", dim, frac);
-file_CC_heur(dim, frac) = sprintf("../data/NB_SOLUTIONS_LLL_HEUR_complex_%s_%s", dim, frac);
+file_CC_heur(dim, frac) = sprintf("../data/NB_SOLUTIONS_LLL_heur_complex_%s_%s", dim, frac);
 
 figure_RR(dim, frac) = sprintf("../figures/nbsol_RR_%s_%s.png", dim, frac)
 figure_CC(dim, frac) = sprintf("../figures/nbsol_CC_%s_%s.png", dim, frac)
@@ -31,10 +31,10 @@ figure_CC(dim, frac) = sprintf("../figures/nbsol_CC_%s_%s.png", dim, frac)
 set logscale y
 
 do for [DIM in "50"] {
-   do for [FRAC in "25 50"] {
-      plot file_RR_gp(DIM, FRAC) u 1:2 ls 1 w lp title "nfroots - average value",\
-      	   file_RR_gp(DIM, FRAC) u 1:3 ls 6 w lp title "nfroots - medians m_1 and m_2",\
-	   file_RR_gp(DIM, FRAC) u 1:4 ls 6 w lp notitle,\
+   do for [FRAC in "25 50 100"] {
+      plot file_RR_gp(DIM, FRAC) u 1:((1-$4)*$2+$4*$3) ls 1 w lp title "nfroots - average value",\
+      	   file_RR_gp(DIM, FRAC) u 1:2 ls 6 w lp title "nfroots - m_1 and m_2",\
+	   file_RR_gp(DIM, FRAC) u 1:3 ls 6 w lp notitle,\
 	   file_RR_heur(DIM, FRAC) u 1:2 ls 3 w lp title "PolynomialRoots\\\_heur",\
    	   file_RR_cert(DIM, FRAC) u 1:2 ls 2 w lp title "PolynomialRoots\\\_cert"
       set terminal pngcairo
@@ -45,16 +45,16 @@ do for [DIM in "50"] {
 
 
 
-do for [DIM in "50"] {
-   do for [FRAC in "25 50"] {
-      plot file_CC_gp(DIM, FRAC) u 1:2 ls 1 w lp title "nfroots - average value",\
-      	   file_CC_gp(DIM, FRAC) u 1:3 ls 6 w lp title "nfroots - medians m_1 and m_2",\
-	   file_CC_gp(DIM, FRAC) u 1:4 ls 6 w lp notitle,\
-	   file_CC_heur(DIM, FRAC) u 1:2 ls 3 w lp title "PolynomialRoots\\\_heur",\
-   	   file_CC_cert(DIM, FRAC) u 1:2 ls 2 w lp title "PolynomialRoots\\\_cert",\
+# do for [DIM in "50"]	{
+#    do for [FRAC in "25 50"] {
+#       plot file_CC_gp(DIM, FRAC) u 1:2 ls 1 w lp title "nfroots - average value",\
+#       	   file_CC_gp(DIM, FRAC) u 1:3 ls 6 w lp title "nfroots - medians m_1 and m_2",\
+# 	   file_CC_gp(DIM, FRAC) u 1:4 ls 6 w lp notitle,\
+# 	   file_CC_heur(DIM, FRAC) u 1:2 ls 3 w lp title "PolynomialRoots\\\_heur",\
+#    	   file_CC_cert(DIM, FRAC) u 1:2 ls 2 w lp title "PolynomialRoots\\\_cert",\
 
-      set terminal pngcairo
-      set output figure_CC(DIM, FRAC)
-      replot
-   }
-}
+#       set terminal pngcairo
+#       set output figure_CC(DIM, FRAC)
+#       replot
+#    }
+# }

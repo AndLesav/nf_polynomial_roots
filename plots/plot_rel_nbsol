@@ -1,6 +1,6 @@
 set border lw 2
 set grid lw 1.5 lt 1 lc "grey"
-set key top left
+set key bottom left
 set key font ",13"
 set xtics font ",15"
 set ytics font ",15" 
@@ -21,18 +21,6 @@ set logscale y
 SIZE=10
 
 
-
-DG=30
-DE=3
-
-plot file_abs(DG, DE, SIZE) u 1:2 w lp ls 1 title "Absolute method",\
-     file_rel(DG, DE, SIZE) u 1:2 w lp ls 2 title "Relative method"
-set terminal pngcairo
-set output figure(DG, DE, SIZE)
-replot
-
-
-
 DG=45;
 DE=2;
 
@@ -41,3 +29,15 @@ plot file_abs(DG, DE, SIZE) u 1:2 w lp ls 1 title "Absolute method",\
 set terminal pngcairo
 set output figure(DG, DE, SIZE)
 replot
+
+DG=30
+DE=3
+
+
+
+plot file_abs(DG, DE, SIZE) u 1:2 w lp ls 1 title "Absolute method",\
+     file_rel(DG, DE, SIZE) u 1:2 w lp ls 2 title "Relative method"
+set terminal pngcairo
+set output figure(DG, DE, SIZE)
+replot
+

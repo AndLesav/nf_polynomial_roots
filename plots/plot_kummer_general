@@ -1,0 +1,61 @@
+set border lw 2
+set grid lw 1.25 lt 1 lc "grey"
+set key right bottom
+set key font ",12"
+set key box lw 1 width -1.3 height 0.5
+set xtics font ",12"
+set ytics font ",12" 
+# set ylabel "Time" font ",17"
+# set xlabel "Dimension" font ",17"
+
+
+set style line 1 dt 4 pt 5 ps 1.5 lw 2 lc "black" #gp
+set style line 2 dt 2 pt 9 ps 1.5 lw 2 lc "blue"   #lll abs
+set style line 3 dt 5 pt 6 ps 1.5 lw 2. lc "dark-magenta"  #lll rel
+
+
+file_gp(version, exp, length) = sprintf("../data/KUMMER_GP_%s_%d_%d", version, exp, length)
+file_abs(version, exp, length) = sprintf("../data/KUMMER_LLL_abs_%s_%d_%d", version, exp, length)
+file_rel(version, exp, length) = sprintf("../data/KUMMER_LLL_rel_%s_%d_%d", version, exp, length)
+
+figure(version,exp,length) = sprintf("../figures/kummer_%s_%d_%d.png", version, exp, length)
+
+array EXP[2] = [2,5]
+array LENGTH[2] = [7,3]
+
+set logscale y
+
+
+# plot split
+
+version="split"
+do for [i=1:2:1] {
+   exp = EXP[i]
+   length = LENGTH[i]
+   plot file_gp(version, exp, length) u 1:2 ls 1 w lp title "nfroots",\
+        file_abs(version, exp, length) u 1:2 ls 2 w lp title "Absolute method",\
+        file_rel(version, exp, length) u 1:2 ls 3 w lp title "Relative method"
+
+   set terminal pngcairo
+   set output figure(version,exp,length)
+   replot
+}
+
+
+
+version="single"
+array EXP[4] = [2,3,5,11]
+array LENGTH[4] = [7,5,3,2]
+
+do for [i=1:4:1] {
+   exp = EXP[i]
+   length = LENGTH[i]
+   plot file_gp(version, exp, length) u 1:2 ls 1 w lp title "nfroots",\
+        file_abs(version, exp, length) u 1:2 ls 2 w lp title "Absolute method",\
+        file_rel(version, exp, length) u 1:2 ls 3 w lp title "Relative method"
+
+   set terminal pngcairo
+   set output figure(version,exp,length)
+   replot
+}
+

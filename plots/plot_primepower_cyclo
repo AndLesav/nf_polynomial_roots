@@ -1,0 +1,57 @@
+set border lw 2
+set grid lw 1.25 lt 1 lc "grey"
+set key left top
+set key font ",12"
+set key box lw 1 width 1 height 1
+set xtics font ",12"
+set ytics font ",12" 
+
+
+set style line 1 dt 1 pt 5 ps 1 lw 2.5 lc "black" #gp
+set style line 2 dt 2 pt 9 ps 1 lw 2.5 lc "blue"   #lll abs
+set style line 3 dt  5 pt 6 lw 2.5 lc "dark-magenta"  #lll rel
+
+
+file_gp_good(prime, exp_e, deg, size) = sprintf("../data/PRIMEPOWER_CYCLO_GP_%s_%d_%d_%d", prime, exp_e, deg, size)
+file_abs_good(prime, exp_e, deg, size) = sprintf("../data/PRIMEPOWER_CYCLO_LLL_abs_%s_%d_%d_%d", prime, exp_e, deg, size)
+file_rel_good(prime, exp_e, deg, size) = sprintf("../data/PRIMEPOWER_CYCLO_LLL_rel_%s_%d_%d_%d", prime, exp_e, deg, size)
+
+
+file_gp_bad(prime, exp_e, deg, size) = sprintf("../data/PRIMEPOWER_CYCLO_GP_%s_%d_%d_%d", prime, exp_e, deg, size)
+file_abs_bad(prime, exp_e, deg, size) = sprintf("../data/PRIMEPOWER_CYCLO_LLL_abs_%s_%d_%d_%d", prime, exp_e, deg, size)
+file_rel_bad(prime, exp_e, deg, size) = sprintf("../data/PRIMEPOWER_CYCLO_LLL_rel_%s_%d_%d_%d", prime, exp_e, deg, size)
+
+
+
+figure_good(prime, exp_e, deg, size) = sprintf("../figures/primepower_cyclo_%s_%d_%d_%d.png",    prime, exp_e, deg, size)
+
+figure_bad(prime, exp_e, deg, size) = sprintf("../figures/primepower_cyclo_%s_%d_%d_%d.png",    prime, exp_e, deg, size)
+
+
+set logscale y
+
+EXP_E=2
+DEG=3
+SIZE=50
+
+do for [PRIME in "3 5"] {
+   plot file_gp_good(PRIME, EXP_E, DEG, SIZE) u ($1*$2):($3/5) ls 1 w lp title "nfroots",\
+        file_abs_good(PRIME, EXP_E, DEG, SIZE) u ($1*$2):3 ls 2 w lp title "Absolute method",\
+        file_rel_good(PRIME, EXP_E, DEG, SIZE) u ($1*$2):3 ls 3 w lp title "Relative method"
+		       	    
+   set terminal pngcairo		
+      set output figure_good(PRIME, EXP_E, DEG, SIZE)
+   replot
+}
+
+
+
+do for [PRIME in "3 5"] {
+   plot file_gp_bad(PRIME, EXP_E, DEG, SIZE) u ($1*$2):($3/5) ls 1 w lp title "nfroots",\
+        file_abs_bad(PRIME, EXP_E, DEG, SIZE) u ($1*$2):3 ls 2 w lp title "Absolute method",\
+        file_rel_bad(PRIME, EXP_E, DEG, SIZE) u ($1*$2):3 ls 3 w lp title "Relative method"
+		       	    
+   set terminal pngcairo		
+      set output figure_bad(PRIME, EXP_E, DEG, SIZE)
+   replot
+}

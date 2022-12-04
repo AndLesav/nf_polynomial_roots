@@ -17,9 +17,12 @@ set style line 4 dt 3 pt 5 lw 2.5 ps 1 lc "olive"    #200
 file_RR(dim,size) = sprintf("../data/spec_lll_real_%d_%d", dim, size)
 file_CC(dim,size) = sprintf("../data/spec_lll_complex_%d_%d", dim, size)
 
-
 file_RR_gp(dim,size) = sprintf("../data/spec_lll_gp_real_%d_%d", dim, size)
 file_CC_gp(dim,size) = sprintf("../data/spec_lll_gp_complex_%d_%d", dim, size)
+
+file_RR_rand_hnf(dim,size) = sprintf("../data/spec_lll_rand_hnf_real_%d_%d", dim, size)
+file_CC_rand_hnf(dim,size) = sprintf("../data/spec_lll_rand_hnf_complex_%d_%d", dim, size)
+
 
 key(dim) = sprintf("n=%d", dim)
 
@@ -33,7 +36,6 @@ figure_CC_times(method,size) = sprintf("../figures/spec_lll_times_CC_%s_%d.png",
 
 SIZE=1
 
-
 METHOD="gp"
 
 # RATIO GP RR
@@ -45,14 +47,14 @@ set terminal pngcairo
 set output figure_RR(METHOD,SIZE)
 replot 
 
-# RATIO GP CC
-plot file_CC_gp(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
-     file_CC_gp(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
-     file_CC_gp(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
-     file_CC_gp(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
-set terminal pngcairo
-set output figure_CC(METHOD,SIZE)
-replot
+# # RATIO GP CC
+# plot file_CC_gp(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+#      file_CC_gp(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+#      file_CC_gp(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+#      file_CC_gp(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_CC(METHOD,SIZE)
+# replot
 
 set key bottom right
 set logscale y
@@ -63,30 +65,28 @@ plot file_RR_gp(50,SIZE) u ($1):($3) ls 1 w lp title "n=50",\
      file_RR_gp(150,SIZE) u ($1):($3) ls 3 w lp title "n=150",\
      file_RR_gp(200,SIZE) u ($1):($3) ls 4 w lp title "n=200"
 set terminal pngcairo
-set output figure_RR_times(METHOD)
+set output figure_RR_times(METHOD,SIZE)
 replot 
 
-# TIMES GP CC
-plot file_CC_gp(50,SIZE) u ($1):($3) ls 1 w lp title "n=50",\
-     file_CC_gp(100,SIZE) u ($1):($3) ls 2 w lp title "n=100",\
-     file_CC_gp(150,SIZE) u ($1):($3) ls 3 w lp title "n=150",\
-     file_CC_gp(200,SIZE) u ($1):($3) ls 4 w lp title "n=200"
-set terminal pngcairo
-set output figure_CC_times(METHOD)
-replot
+# # TIMES GP CC
+# plot file_CC_gp(50,SIZE) u ($1):($3) ls 1 w lp title "n=50",\
+#      file_CC_gp(100,SIZE) u ($1):($3) ls 2 w lp title "n=100",\
+#      file_CC_gp(150,SIZE) u ($1):($3) ls 3 w lp title "n=150",\
+#      file_CC_gp(200,SIZE) u ($1):($3) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_CC_times(METHOD,SIZE)
+# replot
 
 
-
-
-
-# ##################################################
+# # ##################################################
 
 METHOD="fplll"
 set key top right
 unset logscale y
 
+
 # RATIOS fplll RR
-plot file_RR(50,SIZE) u 1:($5/$4) ls 1 w lp title key(50),\
+plot [] [0:4] file_RR(50,SIZE) u 1:($5/$4) ls 1 w lp title key(50),\
      file_RR(100,SIZE) u 1:($5/$4) ls 2 w lp title key(100),\
      file_RR(150,SIZE) u 1:($5/$4) ls 3 w lp title key(150),\
      file_RR(200,SIZE) u 1:($5/$4) ls 4 w lp title key(200)
@@ -95,7 +95,7 @@ set output figure_RR(METHOD,SIZE)
 replot
 
 # RATIOS fplll CC
-plot file_CC(50,SIZE) u 1:($5/$4) ls 1 w lp title key(50),\
+plot [] [0:4] file_CC(50,SIZE) u 1:($5/$4) ls 1 w lp title key(50),\
      file_CC(100,SIZE) u 1:($5/$4) ls 2 w lp title key(100),\
      file_CC(150,SIZE) u 1:($5/$4) ls 3 w lp title key(150),\
      file_CC(200,SIZE) u 1:($5/$4) ls 4 w lp title key(200)
@@ -106,13 +106,14 @@ replot
 set key bottom right
 set logscale y
 
+
 # TIMES fplll RR
 plot file_RR(50,SIZE) u 1:($5) ls 1 w lp title key(50),\
      file_RR(100,SIZE) u 1:($5) ls 2 w lp title key(100),\
      file_RR(150,SIZE) u 1:($5) ls 3 w lp title key(150),\
      file_RR(200,SIZE) u 1:($5) ls 4 w lp title key(200)
 set terminal pngcairo
-set output figure_RR_times(METHOD)
+set output figure_RR_times(METHOD,SIZE)
 replot
 
 # TIMES fplll CC
@@ -121,11 +122,13 @@ plot file_CC(50,SIZE) u 1:($5) ls 1 w lp title key(50),\
      file_CC(150,SIZE) u 1:($5) ls 3 w lp title key(150),\
      file_CC(200,SIZE) u 1:($5) ls 4 w lp title key(200)
 set terminal pngcairo
-set output figure_CC_times(METHOD)
+set output figure_CC_times(METHOD,SIZE)
 replot
 
 
-# # ##################################################
+
+
+# # # ##################################################
 
 set key bottom right
 unset logscale y
@@ -158,7 +161,7 @@ plot file_RR(50,SIZE) u 1:($3) ls 1 w lp title key(50),\
      file_RR(150,SIZE) u 1:($3) ls 3 w lp title key(150),\
      file_RR(200,SIZE) u 1:($3) ls 4 w lp title key(200)
 set terminal pngcairo
-set output figure_RR_times(METHOD)
+set output figure_RR_times(METHOD,SIZE)
 replot
 
 # TIMES magma CC
@@ -167,6 +170,114 @@ plot file_CC(50,SIZE) u 1:($3) ls 1 w lp title key(50),\
      file_CC(150,SIZE) u 1:($3) ls 3 w lp title key(150),\
      file_CC(200,SIZE) u 1:($3) ls 4 w lp title key(200)
 set terminal pngcairo
-set output figure_CC_times(METHOD)
+set output figure_CC_times(METHOD,SIZE)
 replot
+
+
+
+
+# ##################################################
+
+# METHOD="RAND_HNF"
+
+# # RATIO RAND HNF RR
+# plot file_RR_rand_hnf(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+#      file_RR_rand_hnf(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+#      file_RR_rand_hnf(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+#      file_RR_rand_hnf(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_RR(METHOD,SIZE)
+# replot 
+
+# # RATIO RAND HNF CC
+# plot file_CC_rand_hnf(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+#      file_CC_rand_hnf(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+#      file_CC_rand_hnf(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+#      file_CC_rand_hnf(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_CC(METHOD,SIZE)
+# replot
+
+# set key bottom right
+# set logscale y
+
+
+
+# ##################################################
+# ##################################################
+# ##################################################
+
+
+SIZE=5
+
+
+METHOD="gp"
+
+set key top right
+unset logscale y
+
+# # RATIO GP RR
+# plot file_RR_gp(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+#      file_RR_gp(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+#      file_RR_gp(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+#      file_RR_gp(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_RR(METHOD,SIZE)
+# replot 
+
+# RATIO GP CC
+plot file_CC_gp(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+     file_CC_gp(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+     file_CC_gp(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+     file_CC_gp(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+set terminal pngcairo
+set output figure_CC(METHOD,SIZE)
+replot
+
+set key bottom right
+set logscale y
+ 
+# # TIMES GP RR
+# plot file_RR_gp(50,SIZE) u ($1):($3) ls 1 w lp title "n=50",\
+#      file_RR_gp(100,SIZE) u ($1):($3) ls 2 w lp title "n=100",\
+#      file_RR_gp(150,SIZE) u ($1):($3) ls 3 w lp title "n=150",\
+#      file_RR_gp(200,SIZE) u ($1):($3) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_RR_times(METHOD,SIZE)
+# replot 
+
+# TIMES GP CC
+plot file_CC_gp(50,SIZE) u ($1):($3) ls 1 w lp title "n=50",\
+     file_CC_gp(100,SIZE) u ($1):($3) ls 2 w lp title "n=100",\
+     file_CC_gp(150,SIZE) u ($1):($3) ls 3 w lp title "n=150",\
+     file_CC_gp(200,SIZE) u ($1):($3) ls 4 w lp title "n=200"
+set terminal pngcairo
+set output figure_CC_times(METHOD,SIZE)
+replot
+
+
+# # # ##################################################
+
+# METHOD="RAND_HNF"
+
+# # # RATIO RAND HNF RR
+# # plot file_RR_rand_hnf(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+# #      file_RR_rand_hnf(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+# #      file_RR_rand_hnf(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+# #      file_RR_rand_hnf(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+# # set terminal pngcairo
+# # set output figure_RR(METHOD,SIZE)
+# # replot 
+
+# # RATIO RAND HNF CC
+# plot file_CC_rand_hnf(50,SIZE) u ($1):($3/$2) ls 1 w lp title "n=50",\
+#      file_CC_rand_hnf(100,SIZE) u ($1):($3/$2) ls 2 w lp title "n=100",\
+#      file_CC_rand_hnf(150,SIZE) u ($1):($3/$2) ls 3 w lp title "n=150",\
+#      file_CC_rand_hnf(200,SIZE) u ($1):($3/$2) ls 4 w lp title "n=200"
+# set terminal pngcairo
+# set output figure_CC(METHOD,SIZE)
+# replot
+
+# set key bottom right
+# set logscale y
 
