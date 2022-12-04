@@ -1,28 +1,28 @@
 #!/bin/bash
 
-if (( $# < 1 )); then
-    echo -e  "\033[31merror in $0:\033[0m need at least 1 argument";
-    echo "    $0 DIM_G_m and opt. argument:";
-    echo "    NUMBER_DIM NUMBER_FIELDS";
-    echo "    ....DIM_G_m: min. dim. of ground fields [K:\QQ] considered";
-    echo "    ....NUMBER_DIM: number of dim. to be computed, default is 2";
-    echo "    ....NUMBER_FIELDS: number of fields to be created for each set of param., default is 50";
+if (( $# < 2 )); then
+    echo -e  "\033[31merror in $0:\033[0m need at least 2 arguments";
+    echo "    $0 DIM_EXT DIM_G and opt. argument:";
+    echo "    NUMBER_FIELDS";
+    echo "    ....DIM_EXT: ext. dim. of relativ ext [L:K] considered";
+    echo "    ....DIM_G:   dim. of ground field [K:QQ] considered";
+    echo "    ....NUMBER_FIELDS: number of fields to be created for each set of
+    param., default is 50";
     exit;
 fi
 
 # mandatory parameters
-DIM_G_m=$1
+DIM_EXT=$1
+DIM_G=$2
 
 # DEFAULT parameters
-DEFAULT_NUMBER_DIM=2;
 DEFAULT_NUMBER_FIELDS=50;
 
 # assign variables to default values
-NUMBER_DIM=${2-${DEFAULT_NUMBER_DIM}}
 NUMBER_FIELDS=${3-${DEFAULT_NUMBER_FIELDS}}
 
-PARAMS=(DIM_G_m
-	NUMBER_DIM NUMBER_FIELDS);
+PARAMS=(DIM_EXT DIM_G
+	NUMBER_FIELDS);
 
 STR_TAIL=""
 for PARAM in ${PARAMS[@]}; do
@@ -36,9 +36,9 @@ DATA_DIR="${ROOT_DIR}/data";
 LOGS_DIR="${ROOT_DIR}/logs";
 HEAD_DIR="${ROOT_DIR}/heads";
 
-HEAD_FILE="${HEAD_DIR}/head_field_creation_reldeg${STR_TAIL}";
-CODE_FILE="${HEAD_DIR}/field_creation_reldeg${STR_TAIL}";
-LOG_FILE="${LOGS_DIR}/field_creation_reldeg${STR_TAIL}";
+HEAD_FILE="${HEAD_DIR}/head_field_creation_separate${STR_TAIL}";
+CODE_FILE="${HEAD_DIR}/field_creation_separate{STR_TAIL}";
+LOG_FILE="${LOGS_DIR}/field_creation_separate${STR_TAIL}";
 
 # Just check that parent folders are indeed where they should be
 [[ ! -d ${DATA_DIR} ]] && {
@@ -55,7 +55,7 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM := ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "field_creation_reldeg.m" > ${CODE_FILE};
+cat ${HEAD_FILE} "field_creation_separate.m" > ${CODE_FILE};
 
 magma ${CODE_FILE} 1>$LOG_FILE 2>&1  &
 

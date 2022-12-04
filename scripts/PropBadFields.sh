@@ -4,35 +4,36 @@
 
 if (( $# < 3 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 3 argument";
-    echo " Polfield_global.sh DIM SIZE_POL_FIELD DEGREE_EQ";
-    echo "    with opt. arguments TYPE_FIELD NUMBER_TESTS TYPE_EQ";
-    echo "    ....DIM: dim [K:\QQ] considered";
+    echo " PropBadFields.sh DIM_START SIZE_POL_FIELD NUMBER_TESTS";
+    echo "    with opt. arguments DEGREE_EQ TYPE_FIELD  NUMBER_DIM";
+    echo "    ....DIM_START: smallest dim [K:\QQ] considered";
     echo "    ....SIZE_POL_FIELD: size of defining pol P_K(X)";
-    echo "    ....DEGREE_EQ: degree of eq. f(T)";
+    echo "    ....NUMBER_TESTS: number of tests for each fields";
+    echo "    ....DEGREE_EQ: degree of potential eq. f(T)";
     echo "    ....TYPE_FIELD: real or complex, default is real";
-    echo "    ....NUMBER_TESTS: number of tests for each fields, default is 50";
-    echo "    ....TYPE_EQ: split or not, default is split";
+    echo "    ....NUMBER_DIM: number of dim considered, default is 17 (15+17*5=100)";
     exit;
 fi
 
 
 # mandatory parameters
-DIM=$1
+DIM_START=$1
 SIZE_POL_FIELD=$2
-DEGREE_EQ=$3
+NUMBER_TESTS=$3
 
 # DEFAULT parameters
+DEFAULT_DEGREE_EQ=1
 DEFAULT_TYPE_FIELD="real"
-DEFAULT_NUMBER_TESTS=50;
-DEFAULT_TYPE_EQ="split";
+DEFAULT_NUMBER_DIM=15;
 
 # assign variables to default values
-TYPE_FIELD=${4-${DEFAULT_TYPE_FIELD}}
-NUMBER_TESTS=${5-${DEFAULT_NUMBER_TESTS}}
-TYPE_EQ=${6-${DEFAULT_TYPE_EQ}}
+DEGREE_EQ=${4-${DEFAULT_DEGREE_EQ}}
+TYPE_FIELD=${5-${DEFAULT_TYPE_FIELD}}
+NUMBER_DIM=${6-${DEFAULT_NUMBER_DIM}}
 
-PARAMS=(DIM SIZE_POL_FIELD DEGREE_EQ
-	TYPE_FIELD NUMBER_TESTS TYPE_EQ);
+
+PARAMS=(DIM_START SIZE_POL_FIELD NUMBER_TESTS
+	DEGREE_EQ TYPE_FIELD NUMBER_DIM);
 
 STR_TAIL=""
 for PARAM in ${PARAMS[@]}; do
@@ -46,9 +47,9 @@ DATA_DIR="${ROOT_DIR}/data";
 LOGS_DIR="${ROOT_DIR}/logs";
 HEAD_DIR="${ROOT_DIR}/heads";
 
-HEAD_FILE="${HEAD_DIR}/head_roots_absolute${STR_TAIL}";
-CODE_FILE="${HEAD_DIR}/sizeroots_absolute${STR_TAIL}";
-LOG_FILE="${LOGS_DIR}/sizeroots_absolute${STR_TAIL}";
+HEAD_FILE="${HEAD_DIR}/head_propbadfields${STR_TAIL}";
+CODE_FILE="${HEAD_DIR}/probadfields${STR_TAIL}";
+LOG_FILE="${LOGS_DIR}/propbadfields${STR_TAIL}";
 
 # Just check that parent folders are indeed where they should be
 [[ ! -d ${DATA_DIR} ]] && {
@@ -65,8 +66,8 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM = ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "skel_roots_absolute.c" > ${CODE_FILE};
+cat ${HEAD_FILE} "skel_propbadfields.c" > ${CODE_FILE};
 
-gp ${CODE_FILE} 1>$LOG_FILE 2>&1  &
+gp $CODE_FILE 1>$LOG_FILE 2>&1  &
 
 exit 0;

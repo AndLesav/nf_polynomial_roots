@@ -4,35 +4,32 @@
 
 if (( $# < 3 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 3 arguments";
-    echo " $0 DIM_MAX DEGREE_EQ SIZE_ROOTS";
-    echo "    with opt. arguments NUMBER_TESTS CONDS_MIN CONDS_MAX";
-    echo "    ....DIM_MAX: largest dim [K:\QQ] considered";
-    echo "    ....DEGREE_EQ: degree of eq. f(T)";
-    echo "    ....SIZE_ROOTS: size of roots of f(T)";
-    echo "    ....NUMBER_TESTS: number of tests for each fields, default is 50";
-    echo "    ....CONDS_MIN: smallest conductor of K considered, default is 20";
-    echo "    ....CONDS_MAX: largest conductor of K considered, default is 500";
+    echo " $0 PRIME DEGREE_EQ SIZE_ROOTS";
+    echo "    with opt. arguments NUMBER_TESTS DIM_MAX";
+    echo "    .... PRIME: prime p defining conductor of L";
+    echo "    .... DEGREE_EQ: degree of eq. f(T)";
+    echo "    .... SIZE_ROOTS: size of roots of f(T)";
+    echo "    .... NUMBER_TESTS: number of tests for each fields, default is 15";
+    echo "    .... DIM_MAX: largest dim [L:\QQ] considered, default is 256";
     exit;
 fi
 
 
 # mandatory parameters
-DIM_MAX=$1
+PRIME=$1
 DEGREE_EQ=$2
 SIZE_ROOTS=$3
 
 # DEFAULT parameters
-DEFAULT_NUMBER_TESTS=50;
-DEFAULT_CONDS_MIN=20;
-DEFAULT_CONDS_MAX=500;
+DEFAULT_NUMBER_TESTS=15;
+DEFAULT_DIM_MAX=250;
 
 # assign variables to default values
 NUMBER_TESTS=${4-${DEFAULT_NUMBER_TESTS}}
-CONDS_MIN=${5-${DEFAULT_CONDS_MIN}}
-CONDS_MAX=${6-${DEFAULT_CONDS_MAX}}
+DIM_MAX=${5-${DEFAULT_DIM_MAX}}
 
-PARAMS=(DIM_MAX DEGREE_EQ SIZE_ROOTS
-	 NUMBER_TESTS CONDS_MIN CONDS_MAX);
+PARAMS=(PRIME DEGREE_EQ SIZE_ROOTS
+	 NUMBER_TESTS DIM_MAX);
 
 STR_TAIL=""
 for PARAM in ${PARAMS[@]}; do
@@ -46,9 +43,9 @@ DATA_DIR="${ROOT_DIR}/data";
 LOGS_DIR="${ROOT_DIR}/logs";
 HEAD_DIR="${ROOT_DIR}/heads";
 
-HEAD_FILE="${HEAD_DIR}/head_cyclotomics${STR_TAIL}";
-CODE_FILE="${HEAD_DIR}/cyclotomics${STR_TAIL}";
-LOG_FILE="${LOGS_DIR}/cyclotomics${STR_TAIL}";
+HEAD_FILE="${HEAD_DIR}/head_primepower_cyclotomics${STR_TAIL}";
+CODE_FILE="${HEAD_DIR}/primepower_cyclotomics${STR_TAIL}";
+LOG_FILE="${LOGS_DIR}/primepower_cyclotomics${STR_TAIL}";
 
 # Just check that parent folders are indeed where they should be
 [[ ! -d ${DATA_DIR} ]] && {
@@ -65,7 +62,7 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM = ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "skel_cyclotomics.c" > ${CODE_FILE};
+cat ${HEAD_FILE} "skel_primepower_cyclotomics.c" > ${CODE_FILE};
 
 gp $CODE_FILE 1>$LOG_FILE 2>&1  &
 

@@ -17,7 +17,8 @@ default(parisizemax, 200000000000);
 default(nbthreads, 1);
 
 {
-  ExperimentsKummer_LLL_abs(EXPONENT, LENGTH, DEGREE_EQ, vector_field_abs, NUMBER_TESTS, VERSION);
+  ExperimentsKummer_LLL_abs(EXPONENT, LENGTH, DEGREE_EQ, vector_field_abs,\
+			    NUMBER_TESTS, VERSION);
 };
 
 exit;

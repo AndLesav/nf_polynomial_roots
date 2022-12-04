@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# DISCLAIMER : SHOULD NOT BE USED WITH SAME TYPE_FIELD AND 
 
 if (( $# < 3 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 3 argument";
     echo " Polfield_global.sh DIM TYPE_FIELD FRAC_ROOTS and opt. arguments:";
-    echo "    SIZE_POL_FIELD DEGREE_EQ SIZE_ROOTS NUMBER_TESTS TYPE_EQ";
+    echo "    SIZE_POL_FIELD SIZE_ROOTS NUMBER_TESTS TYPE_EQ";
     echo "    ....DIM: dim [K:\QQ] considered";
     echo "    ....TYPE_FIELD: real or complex";
     echo "    ....FRAC_ROOTS: deg(g)/deg(f) where f(T)=g(T)h(T) w. g split, Z(g)=Z(h)"; 

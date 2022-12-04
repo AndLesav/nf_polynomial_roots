@@ -20,7 +20,9 @@ end if;
 for i in [0..NUMBER_DIM-1] do
 
     field_dim := DIM_START + i*50;
-    
+    if TYPE_FIELD eq "complex" then
+	field_dim := 2 * (field_dim div 2);
+    end if;
     print "############################################################";
     print "         FIELD DIM IS: ", field_dim;
     print "############################################################";

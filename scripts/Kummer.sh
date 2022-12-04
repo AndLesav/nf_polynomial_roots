@@ -4,11 +4,10 @@
 if (( $# < 3 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 3 arguments";
     echo "    $0 EXPONENT LENGTH DEGREE_EQ and opt. arguments:";
-    echo "    SIZE_ROOTS NUMBER_TESTS VERSION";
+    echo "    NUMBER_TESTS VERSION";
     echo "    .... EXPONENT: exp. of Kummer ext. L considered";
     echo "    .... LENGTH: length of sequence defining L, i.e. exp^length = [L:QQ]";
     echo "    .... DEGREE_EQ: degree of f(T)";
-    echo "    .... SIZE_ROOTS: size of roots of f(T), default is 10";
     echo "    .... NUMBER_TESTS: number of tests for each field, default is 25";
     echo "    .... VERSION: shape of f(T) (split or single), default is split";
     exit;
@@ -21,17 +20,15 @@ LENGTH=$2
 DEGREE_EQ=$3;
 
 # DEFAULT parameters
-DEFAULT_SIZE_ROOTS=10;
 DEFAULT_NUMBER_TESTS=25;
 DEFAULT_VERSION="split";
 
 # assign variables to default values
-SIZE_ROOTS=${4-${DEFAULT_SIZE_ROOTS}}
-NUMBER_TESTS=${5-${DEFAULT_NUMBER_TESTS}}
-VERSION=${6-${DEFAULT_VERSION}}
+NUMBER_TESTS=${4-${DEFAULT_NUMBER_TESTS}}
+VERSION=${5-${DEFAULT_VERSION}}
 
 PARAMS=(EXPONENT LENGTH DEGREE_EQ
-	SIZE_ROOTS NUMBER_TESTS VERSION)
+	NUMBER_TESTS VERSION)
 
 
 STR_TAIL=""
@@ -76,8 +73,8 @@ cat ${HEAD_FILE} "skel_kummer_relative.c" > ${CODE_FILE_LLL_REL};
 cat ${HEAD_FILE} "skel_kummer_gp.c" > ${CODE_FILE_GP};
 
 # launch computations
-gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &
+# gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &
 gp ${CODE_FILE_LLL_REL} 1>${LOG_FILE_LLL_REL} 2>&1  &
-gp ${CODE_FILE_GP} 1>${LOG_FILE_GP} 2>&1  &
+# gp ${CODE_FILE_GP} 1>${LOG_FILE_GP} 2>&1  &
 
 exit 0;

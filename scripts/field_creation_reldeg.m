@@ -30,7 +30,7 @@ for GROUND_DIM in GROUND_DIMS do
 
     
     for EXT_DIM in EXT_DIMS do
-	
+	print "**********   ext dim is  ", EXT_DIM, "   ***********";
 	for j in [1..NUMBER_FIELDS] do
 	    
 	    print j,  " th number field over ", NUMBER_FIELDS;

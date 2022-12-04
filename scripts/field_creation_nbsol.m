@@ -27,13 +27,12 @@ for ind in [1..#EXT_DIMS] do
     fprintf FILE, "vector_field_rel = %o;\n", [];
     delete FILE;
         
-    for j in [0..5*NUMBER_FIELDS-1] do /* 5 : number of fractions q_f considered */
+    for j in [0..NUMBER_FIELDS-1] do
 
-	print "for ", (j div NUMBER_FIELDS)+1, "th ratio qf:";
 	print "\t", j mod NUMBER_FIELDS + 1,  " th number field over ", NUMBER_FIELDS;
 	
 	/* representation is a bit sparse for efficiency reasons */
-	L, K := Pol_field_creation_tower([GROUND_DIM, EXT_DIM], 1 : supp := [1/5,1/2,1/2]);
+	L, K := Pol_field_creation_tower([GROUND_DIM, EXT_DIM], 1 : supp := [1/5,1/2,1/2], real := false);
 	
 	K := AbsoluteField(K);
 	P := p!DefiningPolynomial(K);
@@ -58,6 +57,6 @@ for ind in [1..#EXT_DIMS] do
 	FILE := Open(string_input_rel, "a");
 	fprintf FILE, "vector_field_rel = concat(vector_field_rel, [[%o, %o]]); \n", p!a, q!b;
 	delete FILE;
-
+	
     end for;
 end for;

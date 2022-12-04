@@ -29,7 +29,7 @@ delete FILE;
 
 
 
-for j in [1..5*NUMBER_FIELDS] do /* #SIZES * NUMBER_FIELDS */
+for j in [1..NUMBER_FIELDS] do /* #SIZES * NUMBER_FIELDS */
     L, K := Pol_field_creation_kummer(exp, r, PRIMES_RANGE);
     
     K := AbsoluteField(K);

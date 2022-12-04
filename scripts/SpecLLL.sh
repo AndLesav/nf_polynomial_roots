@@ -50,13 +50,13 @@ DATA_DIR="${ROOT_DIR}/data";
 LOGS_DIR="${ROOT_DIR}/logs";
 HEAD_DIR="${ROOT_DIR}/heads";
 
-HEAD_FILE="${HEAD_DIR}/head_spec_lll${STR_TAIL}";
-CODE_FILE="${HEAD_DIR}/spec_lll${STR_TAIL}";
-LOG_FILE="${LOGS_DIR}/spec_lll${STR_TAIL}";
+HEAD_FILE="${HEAD_DIR}/head_spec_lll_${TYPE_FIELD}${STR_TAIL}";
+CODE_FILE="${HEAD_DIR}/spec_lll_${TYPE_FIELD}${STR_TAIL}";
+LOG_FILE="${LOGS_DIR}/spec_lll_${TYPE_FIELD}${STR_TAIL}";
 
-HEAD_FILE_GP="${HEAD_DIR}/head_spec_lll_gp${STR_TAIL}";
-CODE_FILE_GP="${HEAD_DIR}/spec_lll_gp${STR_TAIL}";
-LOG_FILE_GP="${LOGS_DIR}/spec_lll_gp${STR_TAIL}";
+HEAD_FILE_GP="${HEAD_DIR}/head_spec_lll_gp_${TYPE_FIELD}${STR_TAIL}";
+CODE_FILE_GP="${HEAD_DIR}/spec_lll_gp_${TYPE_FIELD}${STR_TAIL}";
+LOG_FILE_GP="${LOGS_DIR}/spec_lll_gp_${TYPE_FIELD}${STR_TAIL}";
 
 # Just check that parent folders are indeed where they should be
 [[ ! -d ${DATA_DIR} ]] && {
@@ -80,7 +80,7 @@ echo "TYPE_FIELD = ${TYPE_FIELD};" >> ${HEAD_FILE_GP};
 cat ${HEAD_FILE} "skel_spec_lll.m" > ${CODE_FILE};
 cat ${HEAD_FILE_GP} "skel_spec_lll.c" > ${CODE_FILE_GP};
 
-magma $CODE_FILE 1>$LOG_FILE 2>&1  &
+# magma $CODE_FILE 1>$LOG_FILE 2>&1  &
 gp $CODE_FILE_GP 1>$LOG_FILE_GP 2>&1  &
 
 exit 0;

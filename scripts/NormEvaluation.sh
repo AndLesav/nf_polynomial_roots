@@ -2,13 +2,12 @@
 
 # DISCLAIMER : SHOULD NOT BE USED WITH SAME TYPE_FIELD AND 
 
-if (( $# < 4 )); then
-    echo -e  "\033[31merror in $0:\033[0m need at least 4 argument";
-    echo " $0 DIM_START SIZE_POL_FIELD SIZE_ROOTS TYPE_FIELD";
+if (( $# < 3 )); then
+    echo -e  "\033[31merror in $0:\033[0m need at least 3 argument";
+    echo " $0 DIM_START SIZE_POL_FIELD TYPE_FIELD";
     echo "    with opt. arguments NUMBER_DIM DEGREE_EQ  NUMBER_TESTS";
     echo "    .... DIM_START: smallest dim [K:\QQ] considered";
     echo "    .... SIZE_POL_FIELD: size of defining pol P_K(X)";
-    echo "    .... SIZE_ROOTS: size of roots of f(T)";
     echo "    .... TYPE_FIELD: real or complex";
     echo "    .... NUMBER_DIM: number of dim considered, default is 20 (15+19*5=110)";
     echo "    .... DEGREE_EQ: degree of eq. f(T), default is 25";
@@ -20,8 +19,7 @@ fi
 # mandatory parameters
 DIM_START=$1;
 SIZE_POL_FIELD=$2;
-SIZE_ROOTS=$3;
-TYPE_FIELD=$4;
+TYPE_FIELD=$3;
 
 # DEFAULT parameters
 DEFAULT_NUMBER_DIM=20;
@@ -29,11 +27,11 @@ DEFAULT_DEGREE_EQ=25;
 DEFAULT_NUMBER_TESTS=100;
 
 # assign variables to default values
-NUMBER_DIM=${5-${DEFAULT_NUMBER_DIM}}
-DEGREE_EQ=${6-${DEFAULT_DEGREE_EQ}}
-NUMBER_TESTS=${7-${DEFAULT_NUMBER_TESTS}}
+NUMBER_DIM=${4-${DEFAULT_NUMBER_DIM}}
+DEGREE_EQ=${5-${DEFAULT_DEGREE_EQ}}
+NUMBER_TESTS=${6-${DEFAULT_NUMBER_TESTS}}
 
-PARAMS=(DIM_START SIZE_POL_FIELD SIZE_ROOTS TYPE_FIELD
+PARAMS=(DIM_START SIZE_POL_FIELD TYPE_FIELD
 	NUMBER_DIM DEGREE_EQ NUMBER_TESTS);
 
 STR_TAIL=""

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# DISCLAIMER : SHOULD NOT BE USED WITH SAME TYPE_FIELD AND 
-
 if (( $# < 3 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 3 argument";
     echo " $0 DIM_START SIZE_POL_FIELD TYPE_FIELD";
@@ -43,9 +41,9 @@ DATA_DIR="${ROOT_DIR}/data";
 LOGS_DIR="${ROOT_DIR}/logs";
 HEAD_DIR="${ROOT_DIR}/heads";
 
-HEAD_FILE="${HEAD_DIR}/head_precision_evaluation${STR_TAIL}";
-CODE_FILE="${HEAD_DIR}/precision_evaluation${STR_TAIL}";
-LOG_FILE="${LOGS_DIR}/precision_evaluation${STR_TAIL}";
+HEAD_FILE="${HEAD_DIR}/head_early_abort${STR_TAIL}";
+CODE_FILE="${HEAD_DIR}/early_abort${STR_TAIL}";
+LOG_FILE="${LOGS_DIR}/early_abort${STR_TAIL}";
 
 # Just check that parent folders are indeed where they should be
 [[ ! -d ${DATA_DIR} ]] && {
@@ -62,7 +60,7 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM = ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "skel_prec_eval.c" > ${CODE_FILE};
+cat ${HEAD_FILE} "skel_early_abort.c" > ${CODE_FILE};
 
 gp $CODE_FILE 1>$LOG_FILE 2>&1  &
 

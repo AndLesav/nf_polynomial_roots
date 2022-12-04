@@ -2,7 +2,6 @@
 
 
 # CAREFUL:  NUMBER_TESTS NEEDS TO BE THE SAME AS THE ONE USED TO CREATE FIELDS 
-
 if (( $# < 1 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 1 argument";
     echo "    $0 DIM_G and opt. arguments:";

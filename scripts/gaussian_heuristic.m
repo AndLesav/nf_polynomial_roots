@@ -14,7 +14,7 @@ elif TYPE_FIELD eq 1 then
     TYPE_FIELD := "real";
 end if;
 
-PRECISIONS := [50, 100, 500, 1000, 2000];
+PRECISIONS := [50, 100, 500, 1000, 2000, 5000];
 
 for i in [0..NUMBER_DIM-1] do
     
@@ -22,22 +22,25 @@ for i in [0..NUMBER_DIM-1] do
     if TYPE_FIELD eq "complex" then
 	field_dim := 2*(field_dim div 2);
     end if;
+
     print "********** DIM IS:", field_dim, " **********";
+
     prune_list := [RealField()!i/field_dim : i in [1..field_dim]];
     string_dim := Sprintf("../data/gh_%o_%o", field_dim, TYPE_FIELD);
 
     for precision in PRECISIONS do
-
 	QUO := 0;
 	
 	printf "field_dim: %3o, PRECISION: %3o \n", field_dim, precision;
 	
 	for j in [1..NUMBER_TESTS] do
-
-	    if (j mod 20) eq 0 then print j; end if;
-	    precision_field := precision+3*field_dim;
 	    
-	    size_pol_field := Random(0,10);
+	    if (j mod 20) eq 0 then
+		print j;
+	    end if;
+	    precision_field := precision + 3*field_dim;
+	    
+	    size_pol_field := Random(1,10);
 	    if TYPE_FIELD eq "real" then
 		pol_field := Pol_field_creation_real(field_dim, size_pol_field);
 	    elif TYPE_FIELD eq "complex" then
@@ -47,12 +50,13 @@ for i in [0..NUMBER_DIM-1] do
 	    K := NumberField(pol_field: Check:=false);
 	    a := K.1;
 	    r1, r2 := Signature(K);
-
+	    
 	    if TYPE_FIELD eq "real" then
 		B := RealEmbeddings(a);
 		B := [Abs(B[i]) : i in [1..#B]];
 		m, ind := Max(B);
-		B1 := Create_real_matrix_basis(K, precision, precision_field:index:=ind);
+		B1 := Create_real_matrix_basis(K, precision, precision_field:
+					       index:=ind);
 	    elif TYPE_FIELD eq "complex" then
 		B := Conjugates(a)[r1+1..r1+2*r2];
 		B := [Abs(B[i]) : i in [1..#B]];
@@ -70,7 +74,7 @@ for i in [0..NUMBER_DIM-1] do
 	    sv_n := Sqrt(Norm(ShortestVectors(Lattice(L): Proof:=false, Max:=1, Prune:=prune_list)[1]));
 
 	    QUO +:= sv_n/l1;
-	
+	    
 	end for;
 	print QUO/NUMBER_TESTS;
 	FILE := Open(string_dim, "a");
