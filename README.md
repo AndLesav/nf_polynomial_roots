@@ -26,6 +26,12 @@ This code does not come with any guarantee.
 
 ## How to use scripts?
 
+
+***WARNING : description does not match new versions of the paper or the code***
+
+***TODO : modify the description accordingly***
+
+
 Assume you are in the scripts directory.
 You should ensure that directories named "logs", "data", "heads", "inputs" and "figures" are created next to "scripts" before starting.
 
