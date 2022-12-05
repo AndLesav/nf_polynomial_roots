@@ -80,7 +80,7 @@ echo "TYPE_FIELD = ${TYPE_FIELD};" >> ${HEAD_FILE_GP};
 cat ${HEAD_FILE} "skel_spec_lll.m" > ${CODE_FILE};
 cat ${HEAD_FILE_GP} "skel_spec_lll.c" > ${CODE_FILE_GP};
 
-# magma $CODE_FILE 1>$LOG_FILE 2>&1  &
+magma $CODE_FILE 1>$LOG_FILE 2>&1  &
 gp $CODE_FILE_GP 1>$LOG_FILE_GP 2>&1  &
 
 exit 0;

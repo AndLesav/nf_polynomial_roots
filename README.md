@@ -1,4 +1,3 @@
-
 # nf_polynomial_roots
 Computing polynomial roots in number field through complex embeddings
 
@@ -12,6 +11,7 @@ Andrea Lesavourey.
 
 ## Softwares
 The code has been tested with:
+
 - Pari/Gp V2.13.1. https://pari.math.u-bordeaux.fr/
 
 - Magma V2.24-10   http://magma.maths.usyd.edu.au/magma/
@@ -27,20 +27,33 @@ This code does not come with any guarantee.
 ## How to use scripts?
 
 Assume you are in the scripts directory.
-You should ensure that directories named "logs", "data", "heads", "inputs" and "figures" are created next to "scripts" before starting.
+You should ensure that directories named "logs", "data", "heads", "inputs" and 
+"figures" are created next to "scripts" before starting.
 
-Bash scripts call on Gp or Magma scripts. Results of computations are printed in the "logs" directory.
-If one execute a given bash script  ./Script.sh  without argument, some help will be printed, giving the number of parameters required and a quick description of all parameters (obligatory and optional).
+Bash scripts call on Gp or Magma scripts. Results of computations are printed 
+in the "logs" directory.
+
+If one execute a given bash script  ./Script.sh  without argument, some help 
+will be printed, giving the number of parameters required and a quick 
+description of all parameters (obligatory and optional).
 
 
 ## How to replicate results and plots from the paper?
 
 **CAREFUL** : some parameters may need to be changed ***by hand*** in some plot files
 
-### Heuristics : Section 4
-- Figure 1 : Use script `GaussianHeuristic.sh` (computations in Magma) then `plot_gaussian`
-- Figures 2 and 3 : Use `SpecLLL.sh` (computations in Magma & Pari/Gp) then `plot_spec_lll`
+### Heuristics:
+
+#### Section 3:
+- Figure 1 : Use script `GaussianHeuristic.sh` (computations in Magma) then
+  `plot_gaussian`
+
+#### Section 5:
+- Figures 2 and 3 : Use `SpecLLL.sh` (computations in Magma & Pari/Gp) then
+`plot_spec_lll`
+
 - Precision from norm, figure 16 : Use `PrecisionEvaluation.sh` then `plot_prec_eval`
+
 - Norm evaluation, figure 4 : Use `NormEvaluation.sh` then `plot_norm_eval`
 
 ### Absolute method : Section 5
@@ -51,7 +64,8 @@ If one execute a given bash script  ./Script.sh  without argument, some help wil
 
 ### Relative method : Section 5.3
 
-Some scripts comparing absolute and relative methods require to pre-compute defining polynomials which are then saved in the `./inputs` directory.
+Some scripts comparing absolute and relative methods require to pre-compute 
+defining polynomials which are then saved in the `./inputs` directory.
 This can be done using the scripts whose names are starting by `Field_creation`.
 
 - Impact of heuristics, Figure 8: Use `CompareEqDegree_relative.sh` and `CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and `plot_rel_lll_compar_size`

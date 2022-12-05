@@ -137,7 +137,7 @@ end function;
 
 
 nf_random_elt := function(K, size)
-    return K!(&+[Random(-2^size_coeff, 2^size_coeff)*(K.1)^j : j in [1..Degree(K)]]);
+    return K!(&+[Random(-2^size, 2^size)*(K.1)^j : j in [1..Degree(K)]]);
 end function;
 
 
