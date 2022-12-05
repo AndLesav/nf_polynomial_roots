@@ -911,7 +911,7 @@ ExperimentsNbSolutions_abs_rel(dim_vec, vector_field_rel, vector_field_abs, \
 	   S = Rel_pol_roots(pol_vec, equation, 0, 0);
 	   default(realprecision, 12);
 	   time_lll_rel += (getabstime()-s)/1000.0;
-	   printf("time for lll rel is: %s", time_lll_rel);
+	   /* printf("time for lll rel is: %s", time_lll_rel); */
 	   
 	   if (length(S)>=nr, c_rel += 1);
 	   total_rel += length(S);
@@ -999,8 +999,8 @@ ExperimentsRelDegree_abs_rel(dim_ground, deg_eq, vector_field_rel,\
 	       
 	   if (i%20==0,
 	       printf ("%d th test\n", i-1);
-	       /* printf("Time for rel. lll: %s\n", time_lll_rel/(i-1)); */
-	       /* printf("Time for abs. lll: %s\n", time_lll_abs/(i-1)); */
+	       printf("Time for rel. lll: %s\n", time_lll_rel/(i-1));
+	       printf("Time for abs. lll: %s\n", time_lll_abs/(i-1));
 	       );
 
 

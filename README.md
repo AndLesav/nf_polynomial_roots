@@ -80,27 +80,35 @@ description of all parameters (obligatory and optional).
 
 - Impact of $s_Z$, figure 6: Use `SizeRoots_absolute.sh` then `plot_sizeroots`
 
+
+
 ### Relative method : Section 5.3
 
 Some scripts comparing absolute and relative methods require to pre-compute 
 defining polynomials which are then saved in the `./inputs` directory.
 This can be done using the scripts whose names are starting by `Field_creation`.
 
-- Impact of heuristics, figure 7: Use `CompareEqDegree_relative.sh` and
+- Impact of heuristics, figure 7: use `CompareEqDegree_relative.sh` and
 `CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and 
 `plot_rel_lll_compar_size`
 
-- Abs vs Rel, $|Z(f)|/\deg(f)$, figure 8: Use `CompareNbSol_abs_rel.sh` then 
-`plot_rel_nbsol`
+- Abs vs Rel, $|Z(f)|/\deg(f)$, figure 8: use `FieldCreation_nbsol.sh` to 
+	create number fields, then `CompareNbSol_abs_rel.sh` and `plot_rel_nbsol`
 
-- Abs vs Rel, relative degree $\[L:K\]$, figure 9: Use `CompareRelDeg_abs_rel.sh` 
-then `plot_rel_reldeg`
+- Abs vs Rel, relative degree $\[L:K\]$, figure 9: use `FieldCreation_reldeg.sh`
+to create number fields, then `CompareRelDeg_abs_rel.sh` and `plot_rel_reldeg`
 
-- Cyclotomic fields, figure 10: Use `Cyclotomics.sh` then `plot_cyclo`
+- Cyclotomic fields with extension $K_m/K_m^+$, figure 10: use `Cyclotomics.sh`
+then `plot_cyclo`
 
-- Prime powers cyclotomic fields, table 
+- Prime powers cyclotomic fields, table 5 : use `PrimePowerCyclotomics.sh`
 
-- Kummer fields, figures 12 and 13: Use `Kummer.sh` then `plot_kummer`
+- Kummer fields, figures 11 and 12: use `FieldCreation_kummer.sh` to create 
+fields, then `Kummer.sh` and `plot_kummer_general`
+
+- Small degree number fields and large roots, figure 13: use 
+`FieldCreation_reldeg_fixed.sh` to create fields, then `RelativeDegreeFixed.sh` 
+and `plot_reldeg_fixed`
 
 
 ### Summary of the directories from root

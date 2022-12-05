@@ -338,7 +338,7 @@ Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
   
   if (!cert_prec,
       precision = precision + round(log(log(dg))*log(dg)*dg/2 + dg*log(dg)/2);
-      precision = round(1.1*precision);
+      precision = round(1.15*precision);
       precision = max(precision, 200);
       );
   /* print("precision computed in ", strtime(getabstime()-s)); */
