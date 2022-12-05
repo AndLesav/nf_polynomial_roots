@@ -15,10 +15,14 @@ default(parisizemax, 1000000000000);
   my(n, Q, p, quo, str_quo, FILE_PRINT, g, prec, prec_t, latt, uni, base, h, \
      gemb, SIZE_ROOTS_VEC, SIZE_ROOTS);
   
-  SIZE_ROOTS_VEC = [25];
+
+  SIZE_ROOTS_VEC = [1, 25, 50, 75, 100];
   
   for (kk = 1, length(SIZE_ROOTS_VEC),
 	 SIZE_ROOTS = SIZE_ROOTS_VEC[kk];
+       
+       printf("*************************************************** \n");
+       printf("************* SIZE of ROOTS IS =  %s  *********** \n", SIZE_ROOTS);
        
        FILE_PRINT = strprintf("../data/prec_eval_maxorder_%s_%s_%s", TYPE_FIELD, \
 			      SIZE_POL_FIELD, SIZE_ROOTS);

@@ -13,7 +13,10 @@ default(parisizemax, 1000000000000);
 
   for (k = 1, length(SIZE_ROOTS_VEC),
 	 SIZE_ROOTS = SIZE_ROOTS_VEC[k];
-  
+
+
+       printf("*************************************************** \n");
+       printf("************* SIZE of ROOTS IS =  %s  *********** \n", SIZE_ROOTS);
        FILE_PRINT = strprintf("../data/prec_eval_%s_%s_%s", TYPE_FIELD, SIZE_POL_FIELD, SIZE_ROOTS);
   
        for (i = 0, NUMBER_DIM-1,

@@ -58,7 +58,8 @@ description of all parameters (obligatory and optional).
 - Figures 2 and 3 : Use `SpecLLL.sh` (computations in Magma & Pari/Gp) then
 `plot_spec_lll`
 
-- Precision from norm, figure 16 : Use `PrecisionEvaluation.sh` then `plot_prec_eval`
+- Precision from norm, figure 16 (appendix) : Use `PrecisionEvaluation.sh` then
+`plot_prec_eval`
 
 - Norm evaluation, figure 4 : Use `NormEvaluation.sh` then `plot_norm_eval`
 
@@ -84,9 +85,9 @@ This can be done using the scripts whose names are starting by `Field_creation`.
 ### Summary of the directories from root
  - `./src`: Functions
  - `./scripts`: Bash or Pari/Gp or Magma scripts
- - `./plots`: plot files    
+ - `./plots`: plot files 
  - `./data`: data obtained
- - `./figures`: where figures plotted from plots are put    
+ - `./figures`: where figures plotted from plots are put
  - `./heads`: directory for temporary files
  - `./logs`: logs
  - `./inputs`: input files computed by Magma scripts
