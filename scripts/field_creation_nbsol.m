@@ -32,7 +32,7 @@ for ind in [1..#EXT_DIMS] do
 	print "\t", j mod NUMBER_FIELDS + 1,  " th number field over ", NUMBER_FIELDS;
 	
 	/* representation is a bit sparse for efficiency reasons */
-	L, K := Pol_field_creation_tower([GROUND_DIM, EXT_DIM], 1 : supp := [1/5,1/2,1/2], real := false);
+	L, K := Pol_field_creation_tower([GROUND_DIM, EXT_DIM], 1 : supp := [1/2,1/2,1/2], real := false);
 	
 	K := AbsoluteField(K);
 	P := p!DefiningPolynomial(K);
