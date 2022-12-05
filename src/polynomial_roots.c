@@ -319,12 +319,15 @@ Solve_equation(pol_field, equation, {version=1, number_solutions=0}) = {
 
 
 /* ************************************************************************** */
-/* ******************************** RELATIVE  CASE ************************** */
+/* **************************** RELATIVE  CASE ****************************** */
 /* ************************************************************************** */
 
 
-/* sol polynomial equations eq in relative extension of number fields
- defined by pol_vec */
+/* solve polynomial equation eq in relative extension of number fields
+   defined by pol_vec
+   method : 0 (heuristic) or 1 (certified)
+   cert_prec : 0 or 1 (certified)
+   ns : if not 0, maximum number of solutions to find */
 Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
   my(dg, de, precision, B, M, r1, r1_g, lattice, uni, S, S_full, eq_n);
   dg = poldegree(pol_vec[1]);
@@ -338,18 +341,18 @@ Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
       precision = round(1.1*precision);
       precision = max(precision, 200);
       );
-  print("precision computed in ", strtime(getabstime()-s));
-  print("precision is ", precision);
+  /* print("precision computed in ", strtime(getabstime()-s)); */
+  /* print("precision is ", precision); */
   prec_add *= 2;
   prec_add = round(prec_add);
 
   default(realprecision, round(precision));
   [B, M, r1, r1_g] = Rel_complex_minkowski(pol_vec, precision + prec_add + 2*de*dg);
-  print("mink computed in: ", strtime(getabstime()-s));
+  /* print("mink computed in: ", strtime(getabstime()-s)); */
 
   uni = matid(dg);
   lattice = Rel_complex_basis_lattice(pol_vec, B, precision, uni, 1);
-  printf("lattice computed in: %s \n\n", strtime(getabstime()-s));
+  /* printf("lattice computed in: %s \n\n", strtime(getabstime()-s)); */
   
   S = [];
 

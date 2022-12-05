@@ -75,11 +75,10 @@ description of all parameters (obligatory and optional).
 
 
 ### Absolute method : Section 6.2.
-- Impact of $P_K(X)$, Figure 5: Use `PolfieldField_absolute.sh` then `plot_polfield`
+- Impact of $P_K(X)$, figure 5: Use `PolfieldField_absolute.sh` then 
+`plot_polfield`
 
-- Impact of $s_Z$, Figure 6: Use `SizeRoots_absolute.sh` then `plot_sizeroots`
-
-- Impact of $\# Z_K(f)/deg(f)$, Figure 7: Use `NbSolutions_absolute.sh` then `plot_nbsol_abs`
+- Impact of $s_Z$, figure 6: Use `SizeRoots_absolute.sh` then `plot_sizeroots`
 
 ### Relative method : Section 5.3
 
@@ -87,19 +86,21 @@ Some scripts comparing absolute and relative methods require to pre-compute
 defining polynomials which are then saved in the `./inputs` directory.
 This can be done using the scripts whose names are starting by `Field_creation`.
 
-- Impact of heuristics, Figure 8: Use `CompareEqDegree_relative.sh` and
+- Impact of heuristics, figure 7: Use `CompareEqDegree_relative.sh` and
 `CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and 
 `plot_rel_lll_compar_size`
 
-- Abs vs Rel, $\#Z(f)/\deg(f)$, Figure 9: Use `CompareNbSol_abs_rel.sh` then 
+- Abs vs Rel, $\#Z(f)/\deg(f)$, figure 8: Use `CompareNbSol_abs_rel.sh` then 
 `plot_rel_nbsol`
 
-- Abs vs Rel, relative degree [L:K], Figure 10: Use `CompareRelDeg_abs_rel.sh` 
+- Abs vs Rel, relative degree $[L:K]$, figure 9: Use `CompareRelDeg_abs_rel.sh` 
 then `plot_rel_reldeg`
 
-- Cyclotomic fields, Figure 11: Use `Cyclotomics.sh` then `plot_cyclo`
+- Cyclotomic fields, figure 10: Use `Cyclotomics.sh` then `plot_cyclo`
 
-- Kummer fields, Figures 12 and 13: Use `Kummer.sh` then `plot_kummer`
+- Prime powers cyclotomic fields, table 
+
+- Kummer fields, figures 12 and 13: Use `Kummer.sh` then `plot_kummer`
 
 
 ### Summary of the directories from root

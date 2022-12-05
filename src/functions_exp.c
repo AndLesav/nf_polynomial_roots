@@ -129,7 +129,7 @@ ExperimentsTimingsBadFields(size_pol, deg_eq, {type_field="real", number_tests=2
 	      S = nfroots(p, equation);
 	      if (b_good, time_gp_good += (getabstime()-s)/1000.0; ,
 		  time_gp_bad += (getabstime()-s)/1000.0; );
-	      print(strtime(getabstime() -s ));
+	      /* print(strtime(getabstime() -s )); */
 	      
 	      kill(S);
 	      kill(S_cert);
@@ -221,13 +221,15 @@ ExperimentsPolField(dim_start, size_pol, size_root, deg_eq, number_tests, \
 	     /* 	 printf("Time for heur. lll: %s\n", time_lll_heur/(i-1)); */
 	     /* 	 printf("Time for gp: %s\n", time_gp/(i-1)); */
 		 );
-	   
+
+	   /* randomly generate defining polynomial */
 	   if (type_field=="real",
 	       p = Pol_field_creation_real(field_dim, size_pol); ,
 	       p = Pol_field_creation_complex(field_dim, size_pol);
 	       );
 
-	   
+
+	   /* random equation (split) */
 	   equation = Equation_creation_nf_split(p, deg_eq, size_root);
 
 	   my(b_good = is_good_field(p, deg_eq)[1]);
@@ -346,13 +348,11 @@ ExperimentsSizeRoots(dim, size_pol, deg_eq, number_tests,\
        time_lll_heur_bad = 0;
        time_lll_cert_bad = 0;
        time_gp_bad = 0;
-
-       
 	
-       c_heur = 0;
+       c_heur = 0; 		/* number of completely solved equations */
        c_cert = 0;
 
-       c_good = 0;
+       c_good = 0;		/* number of good / bad fields */
        c_bad = 0;
 	
        for(i = 1, number_tests,
@@ -365,12 +365,14 @@ ExperimentsSizeRoots(dim, size_pol, deg_eq, number_tests,\
 		 /* printf("Time for heur. lll: %s\n", time_lll_heur/(i-1)); */
 		 /* printf("Time for gp: %s\n", time_gp/(i-1)); */
 		 );
-	   
+
+	   /* draw random defining polynomial  */
 	   if (type_field=="real",
 	       p = Pol_field_creation_real(field_dim, size_pol); ,
 	       p = Pol_field_creation_complex(field_dim, size_pol);
 	       );
-	    
+
+	   /* random equation */
 	   equation = Equation_creation_nf_split(p, deg_eq, SIZES[k]);
 
 	   my(b_good = is_good_field(p, deg_eq)[1]);
@@ -381,8 +383,6 @@ ExperimentsSizeRoots(dim, size_pol, deg_eq, number_tests,\
 	   S_cert = Solve_equation(p, equation, 1);
 	   if (b_good, time_lll_cert_good += (getabstime()-s)/1000.0; ,
 	       time_lll_cert_bad += (getabstime()-s)/1000.0; );
-	   
-     
 	     
 	   /* heuristic lll method */
 	   my(s=getabstime());
@@ -396,7 +396,6 @@ ExperimentsSizeRoots(dim, size_pol, deg_eq, number_tests,\
 	   S = nfroots(p, equation);
 	   if (b_good, time_gp_good += (getabstime()-s)/1000.0; ,
 	       time_gp_bad += (getabstime()-s)/1000.0; );
-
 
 	   if (vecprod(S)==vecprod(S_cert),
 	       c_cert += 1;
@@ -462,7 +461,7 @@ ExperimentsSizeRoots(dim, size_pol, deg_eq, number_tests,\
 };
 
 
-/* ratio # Z_K(f) / deg f(T)  is varying */
+/* ratio # Z_K(f) / deg f(T)  is varying -- OLD STUFF */
 ExperimentsNumberSolutions(dim, type_field, frac_roots,\
 			   {size_pol=1, size_roots=10, number_tests=50,\
 			    type_eq=""})=  {
@@ -641,7 +640,7 @@ ExperimentsNumberSolutions(dim, type_field, frac_roots,\
 
 /* ##################### COMPARISON CERT vs HEUR methods #################### */
 
-/* comparison between relative methiods : deg of equation is varying */
+/* comparison between relative methods : deg of equation is varying */
 ExperimentsRelativeCompar_deg(dim_vec, size_pol_vec, size_root, number_tests) = {
   my(DEGS, p, S, field_dim, FILE_LLL_CERT, FILE_LLL_HEUR, time_lll_cert, \
      time_lll_heur, time_gp, c_heur, c_cert, total_cert, total_heur, eq, \
@@ -652,7 +651,7 @@ ExperimentsRelativeCompar_deg(dim_vec, size_pol_vec, size_root, number_tests) = 
   FILE_LLL_HEUR = strprintf("../data/REL_COMPAR_LLL_degeq_heur_%s_%s_%s",\
 			    dim_vec[1], dim_vec[2], size_root);
   
-  DEGS = [5, 10, 25, 35, 50];
+  DEGS = [5, 10, 25, 35, 50];	/* degree of equations */
    
   for (k = 1, length(DEGS),
 	  
@@ -661,7 +660,7 @@ ExperimentsRelativeCompar_deg(dim_vec, size_pol_vec, size_root, number_tests) = 
        time_cert_prec = 0.;	/* only prec certified */
        time_cert_search = 0; /* only search certified */
 	
-       c_heur = 0;
+       c_heur = 0; /* idem as before : count number of fully solved equations */
        c_cert = 0;
        c_cert_prec = 0;
        c_cert_search = 0;
@@ -707,7 +706,7 @@ ExperimentsRelativeCompar_deg(dim_vec, size_pol_vec, size_root, number_tests) = 
 	   if (length(S)==DEGS[k], c_heur += 1);
 	   total_heur += length(S);
 	    
-	   if (i%1==0,
+	   if (i%20==0,
 	       default(realprecision, 10);
 	       print(i "th element over " number_tests "\n");
 	       print(time_cert/i);
@@ -1063,8 +1062,11 @@ ExperimentsRelDegree_abs_rel(dim_ground, deg_eq, vector_field_rel,\
        );
 };
 
+
+
 /* ########################################################################## */
 /* ################## ABSOLUTE vs RELATIVE vs GP vs Magma ################### */
+/* ############### One function for each of the possibilities ############### */
 /* ##################### relative degree [L:K] fixed ######################## */
 /* ########################################################################## */
 
@@ -1318,10 +1320,13 @@ ExperimentsRelDegreeFixed_GP(dim_ext, dim_ground_m, dim_ground_M, deg_eq, \
 
 
 
-/* ************************************************************************** */
-/* ************************  CYCLOTOMIC FIELDS ****************************** */
-/* ************************************************************************** */
+/* ########################################################################## */
+/* ########################### CYCLOTOMIC FIELDS ############################ */
+/* ########################################################################## */
 
+
+/* Use the extension Km/Km^+; call on solving function specific to these ext.
+ consider all fields with [Km:\Q] = euler_phi(m) < dim_max */
 ExperimentsCyclotomics(dim_max, deg_eq, size_roots, number_tests,\
 		       {conds = [20,500]}) = {
   my(p, S, S_abs, S_rel, equation, field_dim, FILE_LLL_ABS, FILE_LLL_REL, FILE_GP, \
@@ -1362,7 +1367,6 @@ ExperimentsCyclotomics(dim_max, deg_eq, size_roots, number_tests,\
 
 	   /* determine if p is a "good" field for this equation size */
 	   my(b_good = is_good_field(p, deg_eq)[1]);
-	   
 
 	   for(i = 1, number_tests,
 		 equation = Equation_creation_nf_split(p, deg_eq, size_roots);
@@ -1463,6 +1467,7 @@ ExperimentsCyclotomics(dim_max, deg_eq, size_roots, number_tests,\
 };
 
 
+/* L = Q(zeta_m) with m = prime^e for e in N  */
 ExperimentsPrimePowerCyclotomics(prime, deg_eq, size_roots, number_tests, \
 				 {dim_max=500}) = {
   my(p, pols, pol_vec, S, S_abs, S_rel, equation, field_dim, FILE_LLL_ABS, \
