@@ -51,23 +51,35 @@ description of all parameters (obligatory and optional).
 ### Heuristics:
 
 #### Section 3:
-- Figure 1 : Use script `GaussianHeuristic.sh` (computations in Magma) then
+- Gaussian heuristic, figure 1: use script `GaussianHeuristic.sh` (computations in Magma) then
   `plot_gaussian`
 
 #### Section 5:
-- Figures 2 and 3 : Use `SpecLLL.sh` (computations in Magma & Pari/Gp) then
+- SpecLLL, figures 2 and 3: use `SpecLLL.sh` (computations in Magma & Pari/Gp) then
 `plot_spec_lll`
 
-- Precision from norm, figure 16 (appendix) : Use `PrecisionEvaluation.sh` then
+- Precision from norm, figure 16 (appendix): use `PrecisionEvaluation.sh` then
 `plot_prec_eval`
 
-- Norm evaluation, figure 4 : Use `NormEvaluation.sh` then `plot_norm_eval`
+- Norm evaluation, figure 4: use `NormEvaluation.sh` then `plot_norm_eval`
 
-### Absolute method : Section 5
-- Table 1: data are printed for
-- Impact of P_K(X), Figure 5: Use `PolfieldField_absolute.sh` then `plot_polfield`
-- Impact of s_Z, Figure 6: Use `SizeRoots_absolute.sh` then `plot_sizeroots`
-- Impact of #Z_K(f)/deg(f), Figure 7: Use `NbSolutions_absolute.sh` then `plot_nbsol_abs`
+- Early abort in decoding, table 1: use `EarlyAbort.sh` 
+
+
+### "Good" and "bad" fields : Section 6.1.
+- Statistical data, table 2: from previous version of `Polfield_absolute.sh`
+
+- Proportion of bad fields, table 3: use `PropBadFields.sh`
+
+- Timings for good / bad fields, table 4: use `TimingsBadFields.sh`
+
+
+### Absolute method : Section 6.2.
+- Impact of $P_K(X)$, Figure 5: Use `PolfieldField_absolute.sh` then `plot_polfield`
+
+- Impact of $s_Z$, Figure 6: Use `SizeRoots_absolute.sh` then `plot_sizeroots`
+
+- Impact of $\# Z_K(f)/deg(f)$, Figure 7: Use `NbSolutions_absolute.sh` then `plot_nbsol_abs`
 
 ### Relative method : Section 5.3
 
@@ -75,10 +87,18 @@ Some scripts comparing absolute and relative methods require to pre-compute
 defining polynomials which are then saved in the `./inputs` directory.
 This can be done using the scripts whose names are starting by `Field_creation`.
 
-- Impact of heuristics, Figure 8: Use `CompareEqDegree_relative.sh` and `CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and `plot_rel_lll_compar_size`
-- Abs vs Rel, #Z(f)/deg(f), Figure 9: Use `CompareNbSol_abs_rel.sh` then `plot_rel_nbsol`
-- Abs vs Rel, relative degree [L:K], Figure 10: Use `CompareRelDeg_abs_rel.sh` then `plot_rel_reldeg`
+- Impact of heuristics, Figure 8: Use `CompareEqDegree_relative.sh` and
+`CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and 
+`plot_rel_lll_compar_size`
+
+- Abs vs Rel, $\#Z(f)/\deg(f)$, Figure 9: Use `CompareNbSol_abs_rel.sh` then 
+`plot_rel_nbsol`
+
+- Abs vs Rel, relative degree [L:K], Figure 10: Use `CompareRelDeg_abs_rel.sh` 
+then `plot_rel_reldeg`
+
 - Cyclotomic fields, Figure 11: Use `Cyclotomics.sh` then `plot_cyclo`
+
 - Kummer fields, Figures 12 and 13: Use `Kummer.sh` then `plot_kummer`
 
 

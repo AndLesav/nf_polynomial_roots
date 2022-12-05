@@ -36,12 +36,12 @@ ExperimentsProportionBadFields(dim_start, size_pol, number_tests,	\
 	      if (j%1000==0, print(j, " th test"));
 	      
 	      );
-       dim += 5;
        str = strprintf("%s\t%s", dim, 1.*c_bad/number_tests);
        f = fileopen(FILE, "a"); 
        filewrite(f, str);
        fileclose(f);
        print ("*****************************************");
+       dim += 5;
        );
 };
 
