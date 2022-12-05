@@ -90,7 +90,7 @@ This can be done using the scripts whose names are starting by `Field_creation`.
 `CompareSizeRoots_relative.sh`, then `plot_rel_lll_compar_degeq` and 
 `plot_rel_lll_compar_size`
 
-- Abs vs Rel, $ | Z(f) | /\deg(f)$, figure 8: Use `CompareNbSol_abs_rel.sh` then 
+- Abs vs Rel, $|Z(f)|/\deg(f)$, figure 8: Use `CompareNbSol_abs_rel.sh` then 
 `plot_rel_nbsol`
 
 - Abs vs Rel, relative degree $\[L:K\]$, figure 9: Use `CompareRelDeg_abs_rel.sh` 
