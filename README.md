@@ -93,7 +93,7 @@ This can be done using the scripts whose names are starting by `Field_creation`.
 - Abs vs Rel, $\#Z(f)/\deg(f)$, figure 8: Use `CompareNbSol_abs_rel.sh` then 
 `plot_rel_nbsol`
 
-- Abs vs Rel, relative degree $[L:K]$, figure 9: Use `CompareRelDeg_abs_rel.sh` 
+- Abs vs Rel, relative degree $\[L:K\]$, figure 9: Use `CompareRelDeg_abs_rel.sh` 
 then `plot_rel_reldeg`
 
 - Cyclotomic fields, figure 10: Use `Cyclotomics.sh` then `plot_cyclo`
