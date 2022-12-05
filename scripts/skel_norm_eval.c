@@ -8,7 +8,12 @@ default(parisizemax, 1000000000000);
   SIZE_ROOTS_VEC = [1, 10, 25, 50, 100];
   
   for (j = 1, length(SIZE_ROOTS_VEC),
+	  
 	 SIZE_ROOTS = SIZE_ROOTS_VEC[j];
+
+       printf("*************************************************** \n");
+       printf("************* SIZE of ROOTS IS =  %s  *********** \n", SIZE_ROOTS);
+       
        FILE_PRINT  = strprintf("../data/norm_eval_%s_%s_%s", TYPE_FIELD, SIZE_POL_FIELD, SIZE_ROOTS);
        for (i = 0, NUMBER_DIM-1,
 	      n = DIM_START + i*5;
