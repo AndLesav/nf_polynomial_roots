@@ -8,7 +8,8 @@ if (( $# < 3 )); then
     echo "    .... EXPONENT: exp. of Kummer ext. L considered";
     echo "    .... LENGTH: length of sequence defining L, i.e. exp^length = [L:QQ]";
     echo "    .... DEGREE_EQ: degree of f(T)";
-    echo "    .... NUMBER_TESTS: number of tests for each field, default is 25";
+    echo "    .... NUMBER_TESTS: number of tests for each field, default is 25;
+   	      needs to be smaller than number of fields in created beforehand";
     echo "    .... VERSION: shape of f(T) (split or single), default is split";
     exit;
 fi
@@ -73,8 +74,8 @@ cat ${HEAD_FILE} "skel_kummer_relative.c" > ${CODE_FILE_LLL_REL};
 cat ${HEAD_FILE} "skel_kummer_gp.c" > ${CODE_FILE_GP};
 
 # launch computations
-# gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &
+gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &
 gp ${CODE_FILE_LLL_REL} 1>${LOG_FILE_LLL_REL} 2>&1  &
-# gp ${CODE_FILE_GP} 1>${LOG_FILE_GP} 2>&1  &
+gp ${CODE_FILE_GP} 1>${LOG_FILE_GP} 2>&1  &
 
 exit 0;
