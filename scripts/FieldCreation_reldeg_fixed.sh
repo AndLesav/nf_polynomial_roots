@@ -8,7 +8,7 @@ if (( $# < 3 )); then
     echo "    ....DIM_G_m: min. dim. of ground field [K:QQ] considered";
     echo "    ....DIM_G_M: max. dim. of ground field [K:QQ] considered";
     echo "    ....NUMBER_FIELDS: number of fields to be created for each set of
-    param., default is 50";	 
+    	      			 param., default is 50";	 
     echo "    ....DEGREE_EQ: degree of potential equation f(T), default is 10";
 	
     exit;

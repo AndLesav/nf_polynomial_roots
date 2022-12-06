@@ -101,9 +101,9 @@ cat ${HEAD_FILE} "skel_reldegree_fixed_gp.c" > ${CODE_FILE_GP};
 cat ${HEAD_FILE_MAGMA} "skel_reldegree_fixed_mgm.m" > ${CODE_FILE_MAGMA};
 
 # launch computations
-# gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &
-# gp ${CODE_FILE_LLL_REL} 1>${LOG_FILE_LLL_REL} 2>&1  &
-# gp ${CODE_FILE_GP} 1>${LOG_FILE_GP} 2>&1  &
+gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &
+gp ${CODE_FILE_LLL_REL} 1>${LOG_FILE_LLL_REL} 2>&1  &
+gp ${CODE_FILE_GP} 1>${LOG_FILE_GP} 2>&1  &
 magma ${CODE_FILE_MAGMA} 1>${LOG_FILE_MAGMA} 2>&1 &
 
 exit 0;

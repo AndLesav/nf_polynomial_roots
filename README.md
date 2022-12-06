@@ -104,7 +104,8 @@ then `plot_cyclo`
 - Prime powers cyclotomic fields, table 5 : use `PrimePowerCyclotomics.sh`
 
 - Kummer fields, figures 11 and 12: use `FieldCreation_kummer.sh` to create 
-fields, then `Kummer.sh` and `plot_kummer_general`
+fields, then `Kummer.sh` (with version split and single respectively) and
+`plot_kummer_general`
 
 - Small degree number fields and large roots, figure 13: use 
 `FieldCreation_reldeg_fixed.sh` to create fields, then `RelativeDegreeFixed.sh` 
