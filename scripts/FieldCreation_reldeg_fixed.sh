@@ -3,14 +3,13 @@
 if (( $# < 3 )); then
     echo -e  "\033[31merror in $0:\033[0m need at least 3 arguments";
     echo "    $0 DIM_EXT DIM_G_m DIM_G_M and opt. argument:";
-    echo "    NUMBER_FIELDS DEGREE_EQ";
+    echo "       NUMBER_FIELDS DEGREE_EQ";
     echo "    ....DIM_EXT: ext. dim. of relativ ext [L:K] considered";
     echo "    ....DIM_G_m: min. dim. of ground field [K:QQ] considered";
     echo "    ....DIM_G_M: max. dim. of ground field [K:QQ] considered";
     echo "    ....NUMBER_FIELDS: number of fields to be created for each set of
-    	      			 param., default is 50";	 
+    	      	      param., default is 50";	 
     echo "    ....DEGREE_EQ: degree of potential equation f(T), default is 10";
-	
     exit;
 fi
 

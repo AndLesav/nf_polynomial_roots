@@ -26,7 +26,6 @@ for i in [1..NUMBER_FIELDS] do
 
     print "\t", i,  " th number field over ", NUMBER_FIELDS;
 
-    
     GROUND_DIM := Random(DIM_G_m, DIM_G_M);
     dim_abs := EXT_DIM * GROUND_DIM;
     
