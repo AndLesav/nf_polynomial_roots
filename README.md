@@ -36,8 +36,9 @@ Assume you are in the scripts directory.
 You should ensure that directories named "logs", "data", "heads", "inputs" and 
 "figures" are created next to "scripts" before starting.
 
-Bash scripts call on Gp or Magma scripts. Results of computations are printed 
-in the "logs" directory.
+Bash scripts in the "scripts" directory are to be called. In turn they will call
+on Gp or Magma scripts which are in the "scripts/skeletons" directory. 
+Results of computations are printed in the "logs" directory.
 
 If one execute a given bash script  ./Script.sh  without argument, some help 
 will be printed, giving the number of parameters required and a quick 
