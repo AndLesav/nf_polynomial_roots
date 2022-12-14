@@ -61,7 +61,7 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM := ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "field_creation_reldeg_fixed.m" > ${CODE_FILE};
+cat ${HEAD_FILE} "skeletons/field_creation_reldeg_fixed.m" > ${CODE_FILE};
 
 magma ${CODE_FILE} 1>$LOG_FILE 2>&1  &
 

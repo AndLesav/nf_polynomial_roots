@@ -95,10 +95,10 @@ echo "VERSION := ${VERSION_MAGMA};" >> ${HEAD_FILE_MAGMA};
 
 
 # create code files
-cat ${HEAD_FILE} "skel_reldegree_fixed_absolute.c" > ${CODE_FILE_LLL_ABS};
-cat ${HEAD_FILE} "skel_reldegree_fixed_relative.c" > ${CODE_FILE_LLL_REL};
-cat ${HEAD_FILE} "skel_reldegree_fixed_gp.c" > ${CODE_FILE_GP};
-cat ${HEAD_FILE_MAGMA} "skel_reldegree_fixed_mgm.m" > ${CODE_FILE_MAGMA};
+cat ${HEAD_FILE} "skeletons/skel_reldegree_fixed_absolute.c" > ${CODE_FILE_LLL_ABS};
+cat ${HEAD_FILE} "skeletons/skel_reldegree_fixed_relative.c" > ${CODE_FILE_LLL_REL};
+cat ${HEAD_FILE} "skeletons/skel_reldegree_fixed_gp.c" > ${CODE_FILE_GP};
+cat ${HEAD_FILE_MAGMA} "skeletons/skel_reldegree_fixed_mgm.m" > ${CODE_FILE_MAGMA};
 
 # launch computations
 gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &

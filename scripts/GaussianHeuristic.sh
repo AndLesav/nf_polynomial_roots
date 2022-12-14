@@ -57,7 +57,7 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM := ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "gaussian_heuristic.m" > ${CODE_FILE};
+cat ${HEAD_FILE} "skeletons/gaussian_heuristic.m" > ${CODE_FILE};
 
 magma ${CODE_FILE} 1>$LOG_FILE 2>&1  &
 

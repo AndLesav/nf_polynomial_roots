@@ -69,9 +69,9 @@ for PARAM in ${PARAMS[@]}; do
 done
 
 # create code files
-cat ${HEAD_FILE} "skel_kummer_absolute.c" > ${CODE_FILE_LLL_ABS};
-cat ${HEAD_FILE} "skel_kummer_relative.c" > ${CODE_FILE_LLL_REL};
-cat ${HEAD_FILE} "skel_kummer_gp.c" > ${CODE_FILE_GP};
+cat ${HEAD_FILE} "skeletons/skel_kummer_absolute.c" > ${CODE_FILE_LLL_ABS};
+cat ${HEAD_FILE} "skeletons/skel_kummer_relative.c" > ${CODE_FILE_LLL_REL};
+cat ${HEAD_FILE} "skeletons/skel_kummer_gp.c" > ${CODE_FILE_GP};
 
 # launch computations
 gp ${CODE_FILE_LLL_ABS} 1>${LOG_FILE_LLL_ABS} 2>&1  &

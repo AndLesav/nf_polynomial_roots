@@ -61,7 +61,7 @@ for PARAM in ${PARAMS[@]}; do
     echo "$PARAM = ${!PARAM};" >> ${HEAD_FILE};
 done
 
-cat ${HEAD_FILE} "skel_timings_badfields.c" > ${CODE_FILE};
+cat ${HEAD_FILE} "skeletons/skel_timings_badfields.c" > ${CODE_FILE};
 
 gp $CODE_FILE 1>$LOG_FILE 2>&1  &
 
