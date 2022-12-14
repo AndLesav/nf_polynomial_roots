@@ -27,10 +27,7 @@ This code does not come with any guarantee.
 ## How to use scripts?
 
 
-***WARNING : description does not match new versions of the paper or the code***
-
-***TODO : modify the description accordingly***
-
+***WARNING : description might not match new versions of the paper or the code***
 
 Assume you are in the scripts directory.
 You should ensure that directories named "logs", "data", "heads", "inputs" and 
@@ -38,7 +35,8 @@ You should ensure that directories named "logs", "data", "heads", "inputs" and
 
 Bash scripts in the "scripts" directory are to be called. In turn they will call
 on Gp or Magma scripts which are in the "scripts/skeletons" directory. 
-Results of computations are printed in the "logs" directory.
+Results of computations are printed in the "logs" directory, data are printed in
+the "data" directory.
 
 If one execute a given bash script  ./Script.sh  without argument, some help 
 will be printed, giving the number of parameters required and a quick 
