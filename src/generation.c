@@ -245,13 +245,15 @@ Cyclo_real_rel_ext_creation(cond, prime, exp, {varg=z, vare=y, varK=t, varL=T}) 
   /* first find minimal pol. of zeta_cond expressed as pol. w. coeff in L */
   /* set of Gal(L/K) = {i | i==1[mK] && gcd(i, mLK)==1}  */
   GLK = [];
-  print(mLK);
-  for (i = 1,  mLK,
-	 if (gcd(i, mLK)==1,
-	     GLK = concat(GLK, lift(chinese(Mod(1, mK), Mod(i, mLK))));
+
+  for (i = 1,  cond,
+	 if (gcd(i, cond)==1 && (i%mK ==1),
+	     /* GLK = concat(GLK, lift(chinese(Mod(1, mK), Mod(i, mLK)))); */
+	     GLK = concat(GLK, i);
 	     );
        );
 
+  
   /* minimal pol. over K^+ will be prod_{s in GLK} (X - zeta_cond^s) * (X - zeta_cond^(-s) ) */
   mu = 1;
   for (i=1, #GLK,
@@ -270,20 +272,19 @@ Cyclo_real_rel_ext_creation(cond, prime, exp, {varg=z, vare=y, varK=t, varL=T}) 
 	 M = matconcat([M ; Vecrev(lift(B[i]), poldegree(qabs))])
        );
 
-   
-  return([p, mu, qabs, M]);
+  mu = lift(mu);
+  V = Vec(mu);
+  W = [];
+  for (i = 1, #V,
+	 w = matsolve(M~, Vecrev(V[i], poldegree(qabs))~);
+       W = concat(W, Polrev(w, varg));
+       );
   
-  /* zmK = Mod(varK, pabs); */
+     
+  q = Pol(W, vare);
   
-  /* q = vare^(2*prime)-(zmK); */
+  return([p, q, qabs]);
   
-  /* pabs = polcyclo(cond); */
-  /* p = polcyclo(cond/prime^exp); */
-  /* p = polcyclo(cond, varg); */
-  /* q = vare^(prime^exp_e)-varg; */
-  /* pabs = polcyclo(prime^(exp_g + exp_e)); */
-  
-  /* return([p, q, pabs]); */
 };
 
 

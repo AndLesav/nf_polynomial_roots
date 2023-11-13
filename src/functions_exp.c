@@ -1467,6 +1467,153 @@ ExperimentsCyclotomics(dim_max, deg_eq, size_roots, number_tests,\
 };
 
 
+ExperimentsCyclotomicsNew(dim_max, deg_eq, size_roots, number_tests,	\
+		       {conds = [20,500]}) = {
+  my(p, S, S_abs, S_rel, equation, field_dim, FILE_LLL_ABS, FILE_LLL_REL, FILE_GP, \
+     time_lll_abs, time_lll_rel, time_gp, c_rel, c_abs, times_gp, times_lll_rel, \
+     times_lll_abs, prime);
+  
+  /* FILE_LLL_ABS_GOOD = strprintf("../data/CYCLO_LLL_abs_good_%s_%s", deg_eq, size_roots); */
+  /* FILE_LLL_REL_GOOD = strprintf("../data/CYCLO_LLL_rel_good_%s_%s", deg_eq, size_roots); */
+  /* FILE_GP_GOOD  = strprintf("../data/CYCLO_GP_good_%s_%s", deg_eq, size_roots);  */
+
+  /* FILE_LLL_ABS_BAD = strprintf("../data/CYCLO_LLL_abs_bad_%s_%s", deg_eq, size_roots); */
+  /* FILE_LLL_REL_BAD = strprintf("../data/CYCLO_LLL_rel_bad_%s_%s", deg_eq, size_roots); */
+  /* FILE_GP_BAD  = strprintf("../data/CYCLO_GP_bad_%s_%s", deg_eq, size_roots);  */
+
+
+  print("deg_eq is: ", deg_eq);
+  for (cond = conds[1], conds[2],		/* potential conductors */
+	 print("***********************************");
+       print("Conductor is ", cond);
+       dim = eulerphi(cond);
+       F = factor(cond);
+       prime = F[1,1];
+       print("Dimension is ", dim);
+       if ((10 < dim) && (dim < dim_max) && (deg_eq^(2*prime) < 2^25),
+	   
+	   time_lll_abs = 0;
+	   time_lll_rel = 0;
+	   time_gp = 0;
+	   	   
+	   c_abs = 0;
+	   c_rel = 0;
+
+	   /* c_good = 0; */
+	   /* c_bad = 0; */
+
+	   pols = Cyclo_real_rel_ext_creation(cond, prime, 1, varg=z, vare=y, varK=t, varL=T);
+	   print(pols);
+	   pol_vec = pols[1..2];
+	   p = pols[3];
+	   
+	   /* p = polcyclo(cond); */
+	   /* p = subst(p, x, y); */
+	   /* print(p); */
+
+	   /* determine if p is a "good" field for this equation size */
+	   my(b_good = is_good_field(p, deg_eq)[1]);
+
+	   for(i = 1, number_tests,
+
+
+		 if (deg_eq==2 || deg_eq!=prime,
+		     equation = Rel_equation_creation_split(pol_vec, deg_eq, size_roots)[1];,
+		     equation = Rel_equation_creation_split(pol_vec, 1, size_roots)[1];
+		     equation = equation*Rel_equation_creation_multiquad(pol_vec, (deg_eq-1)\2, size_roots)[1];
+		     );	   
+	     
+	     
+	       my(s=getabstime());
+	       S_rel = Rel_pol_roots(pol_vec, equation, 1, 0);
+	       time_lll_rel += (getabstime()-s)/1000.0;
+	       print ("relative method done \n");
+		 
+	       /* then absolute computation */
+	       print (p);
+	       p = subst(p, T, y);
+	       
+	       if (deg_eq==2 || prime!=deg_eq,
+		   equation = Equation_creation_nf_split(p, deg_eq, size_roots); ,
+		 
+		   equation = Equation_creation_nf_split(p, 1, size_roots);
+		   equation = equation*Equation_creation_nf_multiquad(p, (deg_eq-1)\2, size_roots);
+		   );
+	     
+	       /* first lll abs. */
+	       my(s=getabstime());
+	       S_abs = Solve_equation(p, equation, 0);
+	       time_lll_abs += (getabstime()-s)/1000.0;
+	     
+	     
+	       /* then gp (abs rep.) */
+	       my(s=getabstime());
+	       S = nfroots(p, equation);
+	       time_gp += (getabstime()-s)/1000.0;
+	     
+	       if (vecprod(S)==vecprod(S_abs), c_abs += 1; );
+	       if (length(S)==length(S_rel), c_rel += 1; );
+	       kill(S);
+	       kill(S_abs);
+	       kill(S_rel);
+
+	       
+	       if (i%5==0, print(i "th element");
+		   printf("Retrieved? %d \t %d \n", c_rel, c_abs);
+		   printf("Times (gp / abs / rel) are: %s \t %s \t %s \n", time_gp/i, time_lll_abs/i, time_lll_rel/i);
+		   );
+	       );
+
+	   /* D_gp = MyVecSort_two_groups(times_gp); */
+	   /* D_lll_abs = MyVecSort_two_groups(times_lll_abs); */
+	   /* D_lll_rel = MyVecSort_two_groups(times_lll_rel); */
+
+	   time_gp /= number_tests;
+	   time_lll_abs /= number_tests;
+	   time_lll_rel /= number_tests;
+	 
+	   /* default(realprecision, 7); */
+	   
+	   /* /\* str_rel = strprintf("%s\t%s\t%s\t%s", cond, dim, time_lll_rel, c_rel); *\/ */
+	   /* /\* str_abs = strprintf("%s\t%s\t%s\t%s", cond, dim, time_lll_abs, c_abs); *\/ */
+	   /* /\* str_gp = strprintf("%s\t%s\t%s\t%s\t%s", cond, dim, time_gp, D_gp[1], D_gp[2]); *\/ */
+
+	   /* str_rel = strprintf("%s\t%s\t%s\t%s", cond, dim, time_lll_rel, c_rel); */
+	   /* str_abs = strprintf("%s\t%s\t%s\t%s", cond, dim, time_lll_abs, c_abs); */
+	   /* str_gp = strprintf("%s\t%s\t%s", cond, dim, time_gp); */
+
+	   /* if (b_good,  */
+	   /*     f = fileopen(FILE_LLL_REL_GOOD, "a"); /\* printing for heur method *\/ */
+	   /*     filewrite(f, str_rel); */
+	   /*     fileclose(f); */
+	       
+	   /*     f = fileopen(FILE_LLL_ABS_GOOD, "a"); /\* printing for heur method *\/ */
+	   /*     filewrite(f, str_abs); */
+	   /*     fileclose(f); */
+	       
+	   /*     f = fileopen(FILE_GP_GOOD, "a"); /\* printing for heur method *\/ */
+	   /*     filewrite(f, str_gp); */
+	   /*     fileclose(f);  , */
+
+	   /*     f = fileopen(FILE_LLL_REL_BAD, "a"); /\* printing for heur method *\/ */
+	   /*     filewrite(f, str_rel); */
+	   /*     fileclose(f); */
+	       
+	   /*     f = fileopen(FILE_LLL_ABS_BAD, "a"); /\* printing for heur method *\/ */
+	   /*     filewrite(f, str_abs); */
+	   /*     fileclose(f); */
+	       
+	   /*     f = fileopen(FILE_GP_BAD, "a"); /\* printing for heur method *\/ */
+	   /*     filewrite(f, str_gp); */
+	   /*     fileclose(f);   */
+	       
+	   /*     ); */
+
+	   );
+       );
+};
+
+
 /* L = Q(zeta_m) with m = prime^e for e in N  */
 ExperimentsPrimePowerCyclotomics(prime, deg_eq, size_roots, number_tests, \
 				 {dim_max=500}) = {
