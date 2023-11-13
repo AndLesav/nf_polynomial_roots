@@ -270,8 +270,7 @@ Cyclo_real_rel_ext_creation(cond, prime, exp, {varg=z, vare=y, varK=t, varL=T}) 
 	 M = matconcat([M ; Vecrev(lift(B[i]), poldegree(qabs))])
        );
 
-  
-  
+   
   return([p, mu, qabs, M]);
   
   /* zmK = Mod(varK, pabs); */
