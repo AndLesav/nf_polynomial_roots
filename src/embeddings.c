@@ -155,7 +155,7 @@ Rel_complex_minkowski(pol_vec, precision) = {
   dg = poldegree(pol_vec[1]);
   de = poldegree(pol_vec[2]);
    
-  default(realprecision, round(precision));
+  default(realprecision, round(10*precision));
    
   a = polrootsreal(pol_vec[1]);
 
@@ -173,9 +173,9 @@ Rel_complex_minkowski(pol_vec, precision) = {
       );
    
   Bg = powers(a, dg-1);
-   
   pe = Pol_embedding_nf(pol_vec[2], Bg);
   R = polroots(pe);
+
   M = matid(de);
   for(i=1, length(R),
 	M[i,] = powers(R[i], de-1);

@@ -338,7 +338,7 @@ Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
   
   if (!cert_prec,
       precision = precision + round(log(log(dg))*log(dg)*dg/2 + dg*log(dg)/2);
-      precision = round(1.15*precision);
+      precision = round(1.2*precision);
       precision = max(precision, 200);
       );
   /* print("precision computed in ", strtime(getabstime()-s)); */
@@ -348,8 +348,9 @@ Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
 
   default(realprecision, round(precision));
   [B, M, r1, r1_g] = Rel_complex_minkowski(pol_vec, precision + prec_add + 2*de*dg);
+  print (r1, r1_g);
   /* print("mink computed in: ", strtime(getabstime()-s)); */
-
+  
   uni = matid(dg);
   lattice = Rel_complex_basis_lattice(pol_vec, B, precision, uni, 1);
   /* printf("lattice computed in: %s \n\n", strtime(getabstime()-s)); */
@@ -633,6 +634,8 @@ Rel_first_sol(~R, lattice, QR, precision, M, P, pol_emb, dp, de, r1_g, r1) = {
        /* if (r1_g, b = TestExpoConj(e, dp, de, r1); ); */
 
        if (b,
+
+	   /* print(e); */
 	   r = vector(de, j, R[j][e[j]]);
 	   
 	   my(s = getabstime());
@@ -666,6 +669,8 @@ Rel_first_sol_heur(~R, lattice, QR, precision, M, P, pol_emb, dp, de, r1_g, r1) 
   pr = pv[#pv];
   e = vector(length(dv), i, 1);
   e[#e] = 0;
+
+  print ("r1, r1_g are: "  r1 " " r1_g "\n" );
   for (i=1, pr,
 	 
 	 default(realprecision, 10);
@@ -714,6 +719,8 @@ Rel_first_sol_heur(~R, lattice, QR, precision, M, P, pol_emb, dp, de, r1_g, r1) 
 
 	   s = getabstime();
 
+	   /* print(e); */
+	   
 	   /* decode one coord. to check if this is a solution */
 	   [bt, at, g] = Rel_test_one_coord_qr(r, Me_inv, lattice, QR, precision, 1);
 	   /* print("test one coord done in: ", strtime(getabstime() - s)); */
@@ -724,7 +731,6 @@ Rel_first_sol_heur(~R, lattice, QR, precision, M, P, pol_emb, dp, de, r1_g, r1) 
 	      /* printf("there is maybe a solution\n"); */
 	      my(ss = getabstime());
 	      my(s = getabstime());
-
 
 	      [bt, g1] = Rel_partial_decode_qr(r, Me_inv, lattice, QR, precision, 1);
 	      

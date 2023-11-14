@@ -1490,8 +1490,10 @@ ExperimentsCyclotomicsNew(dim_max, deg_eq, size_roots, number_tests,	\
        F = factor(cond);
        prime = F[1,1];
        print("Dimension is ", dim);
-       if ((10 < dim) && (dim < dim_max) && (deg_eq^(2*prime) < 2^25),
+       if ((deg_eq^(prime) > 2^27), prime=1);
+       if ((7 < dim) && (dim < dim_max),
 	   
+	   print(prime);
 	   time_lll_abs = 0;
 	   time_lll_rel = 0;
 	   time_gp = 0;
@@ -1518,24 +1520,26 @@ ExperimentsCyclotomicsNew(dim_max, deg_eq, size_roots, number_tests,	\
 
 
 		 if (deg_eq==2 || deg_eq!=prime,
+		     print ("generating split equation");
 		     equation = Rel_equation_creation_split(pol_vec, deg_eq, size_roots)[1];,
+		     print ("generating equation w. only one root");
 		     equation = Rel_equation_creation_split(pol_vec, 1, size_roots)[1];
 		     equation = equation*Rel_equation_creation_multiquad(pol_vec, (deg_eq-1)\2, size_roots)[1];
-		     );	   
+		     );
 	     
 	     
 	       my(s=getabstime());
-	       S_rel = Rel_pol_roots(pol_vec, equation, 1, 0);
+	       S_rel = Rel_pol_roots(pol_vec, equation, 0, 0);
 	       time_lll_rel += (getabstime()-s)/1000.0;
 	       print ("relative method done \n");
+	       print(#S_rel);
 		 
 	       /* then absolute computation */
-	       print (p);
 	       p = subst(p, T, y);
 	       
 	       if (deg_eq==2 || prime!=deg_eq,
 		   equation = Equation_creation_nf_split(p, deg_eq, size_roots); ,
-		 
+
 		   equation = Equation_creation_nf_split(p, 1, size_roots);
 		   equation = equation*Equation_creation_nf_multiquad(p, (deg_eq-1)\2, size_roots);
 		   );
@@ -1558,7 +1562,7 @@ ExperimentsCyclotomicsNew(dim_max, deg_eq, size_roots, number_tests,	\
 	       kill(S_rel);
 
 	       
-	       if (i%5==0, print(i "th element");
+	       if (i%1==0, print(i "th element");
 		   printf("Retrieved? %d \t %d \n", c_rel, c_abs);
 		   printf("Times (gp / abs / rel) are: %s \t %s \t %s \n", time_gp/i, time_lll_abs/i, time_lll_rel/i);
 		   );

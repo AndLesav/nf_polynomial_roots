@@ -7,7 +7,9 @@
 /* specific lll for power-basis */
 MySpecLLL(B, {index=2}) =  {
   my(r, C, M, field_dim = matsize(B)[2]);
-   
+
+  if (field_dim == 2, return (qflll(B, 3)));
+  
   C = max((field_dim-1)*(field_dim+2)\4, 1);
   r = matsize(B)[1]-matsize(B)[2];
   M = Mat(B[1..(r+index), 1..index]);
@@ -26,7 +28,6 @@ MySpecLLL(B, {index=2}) =  {
        my(t = getabstime());
        M = qflll(M, 3);
        );
-   
   return(M);
 };
 
@@ -165,7 +166,7 @@ MyDecodeBabai_2(embeddings, M, G, prec, {heur=1}) = {
 
 	 if (heur, /* test if error is not too large */
 	     default(realprecision, 10);
-	     b = (abs(c-q) < 1/16);
+	     b = (abs(c-q) < 1/8);
 	     );
 	 );
 
@@ -493,7 +494,7 @@ Rel_complex_basis_lattice(pol_vec, Bg, precision, uni, {spec_lll=0}) = {
   M = matconcat([B_real; B_im]);
   M = M*uni;
   M = matconcat([M; C*uni]);
-   
+
   my(t = getabstime());
   default(realprecision, round(precision));
 
@@ -501,7 +502,7 @@ Rel_complex_basis_lattice(pol_vec, Bg, precision, uni, {spec_lll=0}) = {
       M = MySpecLLL(M); ,
       M = qflll(M, 3);
       );
-   
+
   uni_new = M[3..field_dim+2,]/C;
   return([M, uni_new, basis]);
 };
