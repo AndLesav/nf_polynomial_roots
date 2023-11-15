@@ -338,17 +338,17 @@ Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
   
   if (!cert_prec,
       precision = precision + round(log(log(dg))*log(dg)*dg/2 + dg*log(dg)/2);
-      precision = round(1.2*precision);
+      precision = round(1.15*precision);
       precision = max(precision, 200);
       );
   /* print("precision computed in ", strtime(getabstime()-s)); */
   /* print("precision is ", precision); */
-  prec_add *= 2;
+  prec_add *= 1.5;
   prec_add = round(prec_add);
 
   default(realprecision, round(precision));
   [B, M, r1, r1_g] = Rel_complex_minkowski(pol_vec, precision + prec_add + 2*de*dg);
-  print (r1, r1_g);
+  /* print (r1, r1_g); */
   /* print("mink computed in: ", strtime(getabstime()-s)); */
   
   uni = matid(dg);
@@ -362,7 +362,7 @@ Rel_pol_roots(pol_vec, eq, {method=1, cert_prec=1, ns=0}) = {
   if(method==1,
      /* S_full = Rel_test_solve_equation_complex(pol_vec, eq, precision, prec_add, B, M, lattice[1], r1, ns);  , */
      S_full = Rel_test_solve_equation_complex_new(pol_vec, eq, precision, prec_add, B, M, lattice[1], r1, ns);  ,
-     
+     print("starting heuristic method");
      S_full = Rel_test_solve_equation_complex_heur_new(pol_vec, eq, precision, prec_add, B, M, lattice[1], r1, r1_g, ns);
      /* S_full = Rel_test_solve_equation_complex_heur(pol_vec, eq, precision, prec_add, B, M, lattice[1], r1, r1_g, ns); */
      );
@@ -670,14 +670,13 @@ Rel_first_sol_heur(~R, lattice, QR, precision, M, P, pol_emb, dp, de, r1_g, r1) 
   e = vector(length(dv), i, 1);
   e[#e] = 0;
 
-  print ("r1, r1_g are: "  r1 " " r1_g "\n" );
   for (i=1, pr,
 	 
 	 default(realprecision, 10);
        my(s = getabstime());
        /* e = IndexToExponent_multi(i, dv, pv); */
        NextExp_multi(~e, dv);
-
+       
        /* update */
        k = 2;
        bool = e[2]==1;
@@ -719,24 +718,24 @@ Rel_first_sol_heur(~R, lattice, QR, precision, M, P, pol_emb, dp, de, r1_g, r1) 
 
 	   s = getabstime();
 
-	   /* print(e); */
-	   
+	   	   
 	   /* decode one coord. to check if this is a solution */
-	   [bt, at, g] = Rel_test_one_coord_qr(r, Me_inv, lattice, QR, precision, 1);
+	   [bt, at, g] = Rel_test_one_coord_qr(r, Me_inv, lattice, QR, precision, 1 + random(#r));
 	   /* print("test one coord done in: ", strtime(getabstime() - s)); */
 	   
 	   /* decode everything if a potential solution is detected */
 	   if(at==1,
 	      count += 1;
 	      /* printf("there is maybe a solution\n"); */
+	      /* print(e); */
 	      my(ss = getabstime());
 	      my(s = getabstime());
 
 	      [bt, g1] = Rel_partial_decode_qr(r, Me_inv, lattice, QR, precision, 1);
+	      /* print("decoding done in: ",  strtime(getabstime()-s)); */
 	      
 	      if (bt,
 		  g = Vec_to_multipol(g1, 2);
-		  /* print("decoding done in: ",  strtime(getabstime()-s)); */
 		  		  
 		  my(s = getabstime());
 		  /* verify if we got a true solution */
@@ -847,7 +846,7 @@ Rel_test_solve_equation_complex_heur_new(pol_vec, equation, precision, prec_add,
   
   my(s = getabstime());
   
-  R = Rel_pol_mink_roots(equation, pol_vec, Bg, Me, r1, precision\2+dg+
+  R = Rel_pol_mink_roots(equation, pol_vec, Bg, Me, r1, precision\3+dg+
 			 prec_add\10); /* ad hoc precision ? */
   /* print("roots computation: ",  strtime(getabstime()-s)); */
   

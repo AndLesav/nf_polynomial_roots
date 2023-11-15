@@ -224,7 +224,7 @@ Cyclo_rel_ext_creation(prime, exp_g, exp_e, {varg=z, vare=y}) = {
  L is given by the conductor "cond" and k is the maximal totally real subfield
  of the cyclotomic field given by K = Q(zeta_{cond / prime }) */
 Cyclo_real_rel_ext_creation(cond, prime, exp, {varg=z, vare=y, varK=t, varL=T}) = {
-  my(p, q, pabs, qabs, zmL, zmK, eta, mK, mLK, b, i, r1, r2);
+  my(p, q, pabs, qabs, zmL, zmK, eta, mK, mLK, GLK, mu, b, i, r1, r2, B, M, W, V);
 
   mK = cond / prime^exp; mLK = cond / mK;  /* note that cond = mL */
   qabs = polcyclo(cond, varL);	/* pol of L */
@@ -248,7 +248,6 @@ Cyclo_real_rel_ext_creation(cond, prime, exp, {varg=z, vare=y, varK=t, varL=T}) 
 
   for (i = 1,  cond,
 	 if (gcd(i, cond)==1 && (i%mK ==1),
-	     /* GLK = concat(GLK, lift(chinese(Mod(1, mK), Mod(i, mLK)))); */
 	     GLK = concat(GLK, i);
 	     );
        );

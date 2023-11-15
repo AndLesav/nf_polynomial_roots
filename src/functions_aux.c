@@ -413,3 +413,12 @@ is_good_field(pol_field, {deg_eq = 1}) = {
   return ([best_f == dim, best_f]);
 };
  
+/* whether cyclotomic field with conductor `m` has an inert prime */
+cf_can_inert(m) = {
+  F = factor(m);
+  if (matsize(F)[1]>2, return (0);,
+      matsize(F)[1]==2 && (F[1,1] > 2 || F[1, 2] > 1), return (0);,
+      matsize(F)[1]==2 && (F[1,2] > 2), return (0);,
+      return(1);
+      );
+};

@@ -355,7 +355,7 @@ Rel_pol_mink_roots(pol, pol_vec, Bg, Me, r1, prec) =  {
   /* printf("time taken for mink: %s\n", strtime(getabstime()-s)); */
   R = matrix(poldegree(pol), length(m));
   R = vector(length(m), i, []);
-    
+  
   default(realprecision, prec);
    
   for(i=1, r1,

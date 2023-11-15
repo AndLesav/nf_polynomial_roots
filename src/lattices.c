@@ -166,7 +166,7 @@ MyDecodeBabai_2(embeddings, M, G, prec, {heur=1}) = {
 
 	 if (heur, /* test if error is not too large */
 	     default(realprecision, 10);
-	     b = (abs(c-q) < 1/8);
+	     b = (abs(c-q) < 1/16);
 	     );
 	 );
 
